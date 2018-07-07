@@ -13,6 +13,7 @@
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "koa-views": "^6.1.4",
+    "mongoose": "^5.2.1",
     "nunjucks": "^3.1.3"
   }
 }

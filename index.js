@@ -3,6 +3,9 @@ const path = require('path')
 const views = require('koa-views')
 const router = require('./routes')
 const serve = require('koa-static')
+const mongoose = require('mongoose')
+const CONFIG = require('./config/config')
+mongoose.connect(CONFIG.mongodb)
 
 const app = new Koa()
 
