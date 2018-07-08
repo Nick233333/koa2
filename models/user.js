@@ -15,6 +15,10 @@ const UserSchema = new Schema({
 		type: 'string',
 		required: true
 	},
+	isAdmin: {
+		type: Boolean,
+		default: false
+	},
 	meta: {
 		createAt: {
 			type: Date,
