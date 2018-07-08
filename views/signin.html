@@ -6,15 +6,13 @@
             <div class="field">
                 <label class="label">用户名</label>
                 <div class="control">
-                    <input class="input" name="name" type="text" autocomplete="off" placeholder="请输入用户名">
+                    <input required class="input" name="name" type="text" autocomplete="off" placeholder="请输入用户名">
                 </div>
             </div>
             <div class="field">
                 <label class="label">密码</label>
                 <div class="control">
-                    <!-- 禁止自动填充用户名密码 -->
-                    <input type="password" style="position: absolute;left: 9999999px" />
-                    <input class="input" name="password" type="password" placeholder="请输入密码">
+                    <input required autocomplete="off" class="input" name="password" type="password" placeholder="请输入密码">
                 </div>
             </div>
             <div class="field is-grouped">

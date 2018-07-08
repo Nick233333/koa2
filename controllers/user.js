@@ -15,21 +15,22 @@ module.exports = {
 		let { name, email, password, repassword } = ctx.request.body;
 		
 		if (validator.isEmpty(name) === true) {
-			ctx.body = {msg: '用户名不能为空'};
-			return;
+			ctx.flash = { warning: '用户名不能为空' };
+			return ctx.redirect('back');
 		}
     	if (validator.isEmail(email) === false) {
-			ctx.body = {msg: '邮箱格式不正确'};
-			return;
+			ctx.flash = { warning: '邮箱格式不正确' };
+			return ctx.redirect('back');
 		}
 		if (validator.isLength(password, {min:6}) === false) {
-			ctx.body = {msg: '密码长度不符合，至少6位'};
-			return;
+			ctx.flash = { warning: '密码长度不符合，至少6位' };
+			return ctx.redirect('back');
 		}
 		if (validator.equals(password, repassword) === false) {
-			ctx.body = {msg: '密码不一致'};
-			return;
+			ctx.flash = { warning: '密码不一致' };
+			return ctx.redirect('back');
 		}
+		
     	// 对密码进行加密
     	password = await bcrypt.hash(password, salt)
 		const user = {
@@ -39,14 +40,20 @@ module.exports = {
 		};
 		try {
 			const result = await UserModel.create(user);
-			ctx.body = result;
+			ctx.flash = { success: '注册成功' };
+			ctx.redirect('/');
 			
 		} catch (error) {
-			
-			ctx.body = {msg: '用户名或邮箱已存在，请更换'};
+			ctx.flash = { warning: '用户名或邮箱已存在，请更换' };
+			return ctx.redirect('back');
 		}
 	},
 	async signin(ctx, next) {
+		if (ctx.session.user) {
+			ctx.flash = { warning: '已登录' };
+			ctx.redirect('back');
+			return;
+		}
 		if (ctx.method === 'GET') {
 			await ctx.render('signin', {
 				title: '用户登录'
@@ -54,6 +61,14 @@ module.exports = {
 		  	return;
 		}
 		const { name, password } = ctx.request.body;
+		if (validator.isEmpty(name) === true) {
+			ctx.flash = { warning: '用户名不能为空' };
+			return ctx.redirect('back');
+		}
+		if (validator.isEmpty(password) === true) {
+			ctx.flash = { warning: '密码不能为空' };
+			return ctx.redirect('back');
+		}
 		const user = await UserModel.findOne({ name });
 		if (user && await bcrypt.compare(password, user.password)) {
 			ctx.session.user = {
@@ -62,13 +77,16 @@ module.exports = {
 				isAdmin: user.isAdmin,
 				email: user.email
 			}
+			ctx.flash = { success: '登录成功' };
 		  	ctx.redirect('/')
 		} else {
-			ctx.body = '用户名或密码错误'
+			ctx.flash = { warning: '用户名或密码错误' };
+			return ctx.redirect('back');
 		}
 	},
 	signout(ctx, next) {
-		ctx.session = null;
+		ctx.session.user = null;
+		ctx.flash = { warning: '退出登录' };
 		ctx.redirect('/');
 	}
 
