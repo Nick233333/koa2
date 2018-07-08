@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const CONFIG = require('./config/config')
 mongoose.connect(CONFIG.mongodb)
 
+
 const app = new Koa()
 
 app.use(views(path.join(__dirname, 'views'), {

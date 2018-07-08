@@ -1,9 +1,13 @@
 const router = require('koa-router')()
+const Home = require('../controllers/home')
+const About = require('../controllers/about')
+const User = require('../controllers/user')
+
 
 module.exports = (app) => {
-	router.get('/', require('./home').index)
-	router.get('/about', require('./about').index)
-	router.get('/signup', require('./user').signup)
+  router.get('/', Home.index)
+  router.get('/about', About.index)
+  router.get('/signup', User.signup)
 
   app
     .use(router.routes())
