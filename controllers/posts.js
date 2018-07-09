@@ -43,7 +43,8 @@ module.exports = {
                 ctx.flash = { warning: '文章不存在' };
 			    return ctx.redirect('back');
             }
-            if (post.author.toString() !== ctx.session.user._id.toString()) {
+            
+            if (post.author.toString() !== ctx.session.user._id) {
                 throw new Error('没有权限')
                 ctx.flash = { warning: '没有权限' };
 			    return ctx.redirect('back');
@@ -55,7 +56,7 @@ module.exports = {
             return
         }
         const { title, content } = ctx.request.body
-        await PostModel.findByIdAndUpdate(ctx.params.id, {
+        await PostsModel.findByIdAndUpdate(ctx.params.id, {
             title,
             content
         })
@@ -68,7 +69,7 @@ module.exports = {
             throw new Error('文章不存在')
         }
         
-        if (post.author.toString() !== ctx.session.user._id.toString()) {
+        if (post.author.toString() !== ctx.session.user._id) {
             throw new Error('没有权限')
         }
         await PostsModel.findByIdAndRemove(ctx.params.id)

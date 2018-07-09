@@ -15,6 +15,9 @@
             </div>
             <div class="navbar-end">
                 {% if ctx.session.user %}
+                <div class="navbar-item">
+                    <a class="button is-small is-primary" href="/posts/new">写文章</a>
+                </div>
                 <div class="navbar-item has-text-link">
                     {{ctx.session.user.name}}
                 </div>
