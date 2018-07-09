@@ -5,15 +5,33 @@ const serve = require('koa-static');
 const session = require('koa-session');
 const mongoose = require('mongoose');
 const bodyParser = require('koa-bodyparser');
+const marked = require('marked')
 const flash = require('./middlewares/flash')
 const router = require('./routes');
 const CONFIG = require('./config/config');
 mongoose.connect(CONFIG.mongodb);
 
+marked.setOptions({
+	renderer: new marked.Renderer(),
+	gfm: true,
+	tables: true,
+	breaks: false,
+	pedantic: false,
+	sanitize: false,
+	smartLists: true,
+	smartypants: false
+})
+
 const app = new Koa();
 app.use(flash());
 app.keys = ['koa2'];
 app.use(bodyParser());
+
+app.use(async (ctx, next) => {
+	ctx.state.ctx = ctx
+	ctx.state.marked = marked
+	await next()
+})
 
 app.use(async (ctx, next) => {
 	ctx.state.ctx = ctx
