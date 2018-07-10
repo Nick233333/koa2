@@ -8,8 +8,8 @@ async function isLoginUser(ctx, next) {
     if (!ctx.session.user) {
         ctx.flash = { warning: '未登录, 请先登录' }
         return ctx.redirect('/signin')
-  }
-  await next()
+    }
+    await next()
 }
 
 async function isAdmin(ctx, next) {
@@ -23,7 +23,7 @@ async function isAdmin(ctx, next) {
     }
     await next()
 }
-
+    
 module.exports = (app) => {
   
     router.get('/', Home.index)
