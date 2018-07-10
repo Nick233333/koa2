@@ -43,7 +43,6 @@ module.exports = {
                 ctx.flash = { warning: '文章不存在' };
 			    return ctx.redirect('back');
             }
-            
             if (post.author.toString() !== ctx.session.user._id) {
                 throw new Error('没有权限')
                 ctx.flash = { warning: '没有权限' };
