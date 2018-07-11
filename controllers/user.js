@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 let validator = require('validator');
 const UsersModel = require('../models/users')
+const helpers = require('../functions/helpers')
 
 module.exports = {
 	async signup(ctx, next) {
@@ -40,10 +41,12 @@ module.exports = {
 		};
 		try {
 			const result = await UsersModel.create(user);
-			ctx.flash = { success: '注册成功' };
+            ctx.flash = { success: '注册成功' };
+            helpers.userInfo(result, ctx);
 			ctx.redirect('/');
 			
 		} catch (error) {
+            
 			ctx.flash = { warning: '用户名或邮箱已存在，请更换' };
 			return ctx.redirect('back');
 		}
@@ -76,7 +79,7 @@ module.exports = {
 				name: user.name,
 				isAdmin: user.isAdmin,
 				email: user.email
-			}
+            }
 			ctx.flash = { success: '登录成功' };
 		  	ctx.redirect('/')
 		} else {
