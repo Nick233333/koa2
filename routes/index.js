@@ -3,7 +3,9 @@ const Home = require('../controllers/home')
 const About = require('../controllers/about')
 const User = require('../controllers/user')
 const Posts = require('../controllers/posts')
-  
+const Comments = require('../controllers/comments')
+
+
 async function isLoginUser(ctx, next) {
     if (!ctx.session.user) {
         ctx.flash = { warning: '未登录, 请先登录' }
@@ -40,6 +42,8 @@ module.exports = (app) => {
     router.get('/posts/:id/edit',isLoginUser, Posts.edit)
     router.post('/posts/:id/edit',isLoginUser, Posts.edit)
     router.get('/posts/:id/delete',isLoginUser, Posts.destroy)
+    router.post('/comments/new', isLoginUser, Comments.create)
+    router.get('/comments/:id/delete', isLoginUser, Comments.destroy)
 
     app.use(router.routes());
     app.use(router.allowedMethods());

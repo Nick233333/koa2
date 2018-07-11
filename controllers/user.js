@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 let validator = require('validator');
-const UserModel = require('../models/user')
+const UsersModel = require('../models/users')
 
 module.exports = {
 	async signup(ctx, next) {
@@ -39,7 +39,7 @@ module.exports = {
 			password
 		};
 		try {
-			const result = await UserModel.create(user);
+			const result = await UsersModel.create(user);
 			ctx.flash = { success: '注册成功' };
 			ctx.redirect('/');
 			
@@ -69,7 +69,7 @@ module.exports = {
 			ctx.flash = { warning: '密码不能为空' };
 			return ctx.redirect('back');
 		}
-		const user = await UserModel.findOne({ name });
+		const user = await UsersModel.findOne({ name });
 		if (user && await bcrypt.compare(password, user.password)) {
 			ctx.session.user = {
 				_id: user._id,

@@ -1,4 +1,6 @@
 const PostsModel = require('../models/posts');
+const CommentsModel = require('../models/comments');
+
 module.exports = {
     async index(ctx, next) {
 		const posts = await PostsModel.find({})
@@ -26,11 +28,15 @@ module.exports = {
         try {
             const post = await PostsModel.findById(ctx.params.id)
             .populate({ path: 'author', select: 'name' });
+            const comments = await CommentsModel.find({ postId: ctx.params.id })
+            .populate({ path: 'from', select: 'name' })
             await ctx.render('post', {
                 title: post.title,
-                post
+                post,
+                comments
             })
         } catch (error) {
+            console.log(error)
             ctx.flash = { warning: '文章不存在' };
 			return ctx.redirect('back');
         }

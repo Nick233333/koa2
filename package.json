@@ -1,13 +1,13 @@
 {
   "name": "koa2",
   "version": "1.0.0",
-  "description": "",
+  "description": "koa2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Nick",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "koa": "^2.5.1",
