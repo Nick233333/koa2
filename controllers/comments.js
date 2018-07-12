@@ -9,7 +9,7 @@ module.exports = {
             ctx.redirect('back')
             return
         }
-        ctx.request.body.content = xss(content)
+        ctx.request.body.content = validator.escape(content)
         const comment = Object.assign(ctx.request.body, {
             from: ctx.session.user._id,
         });
