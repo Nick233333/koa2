@@ -74,12 +74,7 @@ module.exports = {
 		}
 		const user = await UsersModel.findOne({ name });
 		if (user && await bcrypt.compare(password, user.password)) {
-			ctx.session.user = {
-				_id: user._id,
-				name: user.name,
-				isAdmin: user.isAdmin,
-				email: user.email
-            }
+			helpers.userInfo(user, ctx);
 			ctx.flash = { success: '登录成功' };
 		  	ctx.redirect('/')
 		} else {
