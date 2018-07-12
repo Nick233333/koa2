@@ -15,26 +15,28 @@ module.exports = {
         });
         
         await CommentsModel.create(comment);
-        ctx.flash = { success: '留言成功' };
+        ctx.flash = { warning: '评论成功' };
         ctx.redirect('back');
     },
     async destroy(ctx, next) {
         const commentId = ctx.params.id
         if (commentId.length !== 24) {
-            ctx.flash = { error: '评论不存在' }
+            ctx.flash = { warning: '参数错误' }
             ctx.redirect('back')
+            return;
         }
-        const comment = await CommentsModel.findById(ctx.params.id)
+        const comment = await CommentsModel.findById(commentId)
         if (!comment) {
-            ctx.flash = { error: '评论不存在' }
+            ctx.flash = { warning: '评论不存在' }
             ctx.redirect('back')
+            return;
         }
         if (comment.from.toString() !== ctx.session.user._id.toString()) {
             ctx.flash = { success: '没有权限' }
             ctx.redirect('back')
         }
         await CommentsModel.findByIdAndRemove(ctx.params.id)
-        ctx.flash = { success: '成功删除留言' }
+        ctx.flash = { success: '删除成功' }
         ctx.redirect('back')
     }
   }
