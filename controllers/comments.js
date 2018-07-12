@@ -19,15 +19,18 @@ module.exports = {
         ctx.redirect('back');
     },
     async destroy(ctx, next) {
+        const commentId = ctx.params.id
+        if (commentId.length !== 24) {
+            ctx.flash = { error: '评论不存在' }
+            ctx.redirect('back')
+        }
         const comment = await CommentsModel.findById(ctx.params.id)
         if (!comment) {
-            throw new Error('留言不存在')
-            ctx.flash = { success: '成功删除留言' }
-        ctx.redirect('back')
+            ctx.flash = { error: '评论不存在' }
+            ctx.redirect('back')
         }
         if (comment.from.toString() !== ctx.session.user._id.toString()) {
-            throw new Error('没有权限')
-            ctx.flash = { success: '成功删除留言' }
+            ctx.flash = { success: '没有权限' }
             ctx.redirect('back')
         }
         await CommentsModel.findByIdAndRemove(ctx.params.id)
