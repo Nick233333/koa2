@@ -27,7 +27,9 @@
     </div>
     <div class="media-right is-invisible">
         <!-- <button id="reply" class="button is-small is-primary">回复</button> -->
+        {% if (comment.from._id == ctx.session.user._id) or (post.author._id == ctx.session.user._id) or ctx.session.user.isAdmin %}
         <a href="/comments/{{comment._id}}/delete" class="button is-small">删除</a>
+        {% endif %}
     </div>
 </article>
 {% endfor %}

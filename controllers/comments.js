@@ -31,10 +31,6 @@ module.exports = {
             ctx.redirect('back')
             return;
         }
-        if (comment.from.toString() !== ctx.session.user._id.toString()) {
-            ctx.flash = { success: '没有权限' }
-            ctx.redirect('back')
-        }
         await CommentsModel.findByIdAndRemove(ctx.params.id)
         ctx.flash = { success: '删除成功' }
         ctx.redirect('back')

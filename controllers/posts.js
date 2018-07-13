@@ -36,7 +36,6 @@ module.exports = {
                 comments
             })
         } catch (error) {
-            console.log(error)
             ctx.flash = { warning: '文章不存在' };
 			return ctx.redirect('back');
         }

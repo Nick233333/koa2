@@ -86,8 +86,12 @@
     height: 100vh;
     overflow: hidden;
 }
-
+/* 分享插件样式修改 */
 .social-share .icon-wechat .wechat-qrcode {
-    width: 223px !important;
-    padding-left: 5px;
+    width: 220px !important;
+    left: -95px;
+}
+
+.wechat-qrcode .help p {
+    padding-left: 8px !important;
 }
