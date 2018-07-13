@@ -74,8 +74,12 @@ module.exports = {
 		}
 		const user = await UsersModel.findOne({ name });
 		if (user && await bcrypt.compare(password, user.password)) {
-			helpers.userInfo(user, ctx);
-			ctx.flash = { success: '登录成功' };
+            helpers.userInfo(user, ctx);
+            ctx.flash = { success: '登录成功' };
+            if (ctx.session['flash_url']) {
+                ctx.redirect(ctx.session['flash_url'])
+                return ctx.session['flash_url'] = null
+            }
 		  	ctx.redirect('/')
 		} else {
 			ctx.flash = { warning: '用户名或密码错误' };
