@@ -3,10 +3,18 @@
         <div class="field">
             <input type="hidden" name="postId" value="{{post._id}}">
             <p class="control">
+                {% if ctx.session.user._id %}
                 <textarea name="content" class="textarea" placeholder="发表评论…"></textarea>
+                {% else %}
+                <textarea disabled name="content" class="textarea" placeholder="请先登录"></textarea>
+                {% endif %}         
             </p>
         </div>
-        <button class="button is-info is-pulled-right">Submit</button>
+        {% if ctx.session.user._id %}
+        <button class="button is-info is-pulled-right">提交</button>
+        {% else %}
+        <button disabled class="button is-info is-pulled-right">提交</button>
+        {% endif %} 
     </div>
 </form>
 {% for comment in comments %}
