@@ -17,9 +17,18 @@ module.exports = {
             })
             return;
         }
+        if (!ctx.request.body.title) {
+            ctx.flash = { warning: '文章标题不能为空' };
+			return ctx.redirect('back');
+        }
+        if (!ctx.request.body.content) {
+            ctx.flash = { warning: '文章内容不能为空' };
+			return ctx.redirect('back');
+        }
         const post = Object.assign(ctx.request.body, {
             author: ctx.session.user._id
         })
+        
         const res = await PostsModel.create(post);
         ctx.flash = { success: '发表文章成功' };
         ctx.redirect(`/posts/${res._id}`);

@@ -32,5 +32,26 @@
 </div>
 {% endblock %}
 {% block script %}
+<script src="//cdn.bootcss.com/limonte-sweetalert2/7.21.1/sweetalert2.all.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+<script>
+    var is_login = '{{ ctx.session.user.name }}';
+    $('#content').click(function() {
+        if (!is_login) {
+            swal({ 
+                text: '请先登录：）', 
+                type: 'warning',
+                showCancelButton: true, 
+                cancelButtonText: '取消',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '登录', 
+            }).then(function(dismiss) {
+                if (dismiss.value === true) {
+                    window.location = '/signin';
+                }
+            })
+        }
+    })
+</script>
 {% endblock %}

@@ -3,17 +3,13 @@
         <div class="field">
             <input type="hidden" name="postId" value="{{post._id}}">
             <p class="control">
-                {% if ctx.session.user._id %}
-                <textarea name="content" class="textarea" placeholder="发表评论…"></textarea>
-                {% else %}
-                <textarea disabled name="content" class="textarea" placeholder="请先登录"></textarea>
-                {% endif %}         
+                <textarea required name="content" id="content" class="textarea" placeholder="发表评论…"></textarea>
             </p>
         </div>
         {% if ctx.session.user._id %}
         <button class="button is-info is-pulled-right">提交</button>
         {% else %}
-        <button disabled class="button is-info is-pulled-right">提交</button>
+        <a href="/signin" class="button is-link is-pulled-right">登录</a>
         {% endif %} 
     </div>
 </form>
@@ -36,7 +32,7 @@
     <div class="media-right is-invisible">
         <!-- <button id="reply" class="button is-small is-primary">回复</button> -->
         {% if (comment.from._id == ctx.session.user._id) or (post.author._id == ctx.session.user._id) or ctx.session.user.isAdmin %}
-        <a href="/comments/{{comment._id}}/delete" class="button is-small">删除</a>
+        <a href="/comments/{{comment._id}}/delete" class="button is-small is-danger">删除</a>
         {% endif %}
     </div>
 </article>

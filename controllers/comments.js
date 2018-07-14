@@ -3,14 +3,13 @@ let validator = require('validator');
 
 module.exports = {
     async create(ctx, next) {
-        let { content } = ctx.request.body
-        if (!content) {
+        let { content, postId } = ctx.request.body;
+        if (validator.trim(content) === '') {
             ctx.flash = { warning: '评论内容不能为空' }
-            ctx.redirect('back')
-            return
+            return ctx.redirect('back')
         }
-        ctx.request.body.content = validator.escape(content)
-        const comment = Object.assign(ctx.request.body, {
+        content = validator.escape(content)
+        const comment = Object.assign({ content, postId }, {
             from: ctx.session.user._id,
         });
         
