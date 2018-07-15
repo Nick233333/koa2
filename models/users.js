@@ -19,6 +19,10 @@ const UsersSchema = new Schema({
 	isAdmin: {
 		type: Boolean,
 		default: false
+    },
+    isAuth: {
+		type: Boolean,
+		default: true
 	},
 	meta: {
 		createAt: {

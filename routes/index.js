@@ -5,7 +5,7 @@ const User = require('../controllers/user')
 const Posts = require('../controllers/posts')
 const Comments = require('../controllers/comments')
 const isLogin = require('../middlewares/is_login')
-    
+
 module.exports = (app) => {
   
     router.get('/', Home.index)

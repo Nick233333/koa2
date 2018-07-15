@@ -72,8 +72,13 @@ module.exports = {
 			ctx.flash = { warning: '密码不能为空' };
 			return ctx.redirect('back');
 		}
-		const user = await UsersModel.findOne({ name });
+        const user = await UsersModel.findOne({ name });
+        
 		if (user && await bcrypt.compare(password, user.password)) {
+            if (user.isAuth === false) {
+                ctx.flash = { warning: '账号权限异常，请联系管理员' };
+                return ctx.redirect('back');
+            }
             helpers.userInfo(user, ctx);
             ctx.flash = { success: '登录成功' };
             if (ctx.session['flash_url']) {

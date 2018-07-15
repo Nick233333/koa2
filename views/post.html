@@ -57,7 +57,9 @@
         }
     });
     $('#content').keydown(function() {
-        showDialog();
+        if (!is_login) {
+            showDialog();
+        }
     })
 </script>
 {% endblock %}
