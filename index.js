@@ -38,21 +38,21 @@ app.use(views(path.join(__dirname, 'views'), {
 	map: { html: 'nunjucks' }
 }));
 app.use(serve(
-	path.join(__dirname, 'public')
+	path.join(__dirname, CONFIG.static_path)
 ));
 
 app.use(session({
 	key: CONFIG.session.key,
     maxAge: CONFIG.session.maxAge,
     store: redisStore({
-        auth_pass: 'redis',
-        db: 1
+        auth_pass: CONFIG.redis_password,
+        db: CONFIG.redis_db_session
     })
 }, app));
 app.use(flash());
 
 router(app);
 
-app.listen(3000, () => {
-	console.log('server is running at http://localhost:3000')
+app.listen(process.env.PORT, () => {
+	console.log(`server is running at http://127.0.0.1:${process.env.PORT}`)
 });
