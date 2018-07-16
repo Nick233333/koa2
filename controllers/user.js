@@ -46,7 +46,6 @@ module.exports = {
 			ctx.redirect('/');
 			
 		} catch (error) {
-            
 			ctx.flash = { warning: '用户名或邮箱已存在，请更换' };
 			return ctx.redirect('back');
 		}

@@ -24,7 +24,13 @@ module.exports = (app) => {
     router.get('/posts/:id/delete',isLogin, Posts.destroy)
     router.post('/comments/new', isLogin, Comments.create)
     router.get('/comments/:id/delete', isLogin, Comments.destroy)
-
+    
     app.use(router.routes());
     app.use(router.allowedMethods());
+    //404 路由，必须放最后
+    app.use(async (ctx, next) => {
+        await ctx.render('404', {
+            title: '404'
+        })
+    })
 }

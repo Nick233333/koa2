@@ -9,6 +9,7 @@ const marked = require('marked')
 let redisStore = require('koa-redis');
 const flash = require('./middlewares/flash')
 const router = require('./routes');
+const error = require('./middlewares/error_handler')
 const CONFIG = require('./config/config');
 mongoose.connect(CONFIG.mongodb);
 
@@ -26,21 +27,18 @@ marked.setOptions({
 const app = new Koa();
 
 app.keys = ['koa2'];
-app.use(bodyParser());
 
 app.use(async (ctx, next) => {
 	ctx.state.ctx = ctx
 	ctx.state.marked = marked
 	await next()
 })
-
 app.use(views(path.join(__dirname, 'views'), {
 	map: { html: 'nunjucks' }
 }));
 app.use(serve(
 	path.join(__dirname, CONFIG.static_path)
 ));
-
 app.use(session({
 	key: CONFIG.session.key,
     maxAge: CONFIG.session.maxAge,
@@ -49,6 +47,8 @@ app.use(session({
         db: CONFIG.redis_db_session
     })
 }, app));
+app.use(bodyParser());
+app.use(error())
 app.use(flash());
 
 router(app);
