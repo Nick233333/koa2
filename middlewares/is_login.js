@@ -4,6 +4,6 @@ module.exports = async (ctx, next) => {
         ctx.session['flash_url'] = ctx.url
         return ctx.redirect('/signin')
     }
-    await next()
+    await next(ctx)
 }
     

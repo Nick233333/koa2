@@ -5,9 +5,9 @@ const User = require('../controllers/user')
 const Posts = require('../controllers/posts')
 const Comments = require('../controllers/comments')
 const isLogin = require('../middlewares/is_login')
-
+const throttle = require('../middlewares/throttle')
 module.exports = (app) => {
-  
+    router.use(['/posts/new', '/comments/new'], throttle)
     router.get('/', Home.index)
     router.get('/about', About.index)
     router.get('/signup', User.signup)
@@ -16,6 +16,7 @@ module.exports = (app) => {
     router.post('/signin', User.signin)
     router.get('/signout', User.signout)
     router.get('/posts', Posts.index)
+    
     router.get('/posts/new', isLogin, Posts.create)
     router.post('/posts/new', isLogin, Posts.create)
     router.get('/posts/:id', Posts.show)

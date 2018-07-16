@@ -14,7 +14,7 @@ module.exports = {
         });
         
         await CommentsModel.create(comment);
-        ctx.flash = { warning: '评论成功' };
+        ctx.flash = { success: '评论成功' };
         ctx.redirect('back');
     },
     async destroy(ctx, next) {
