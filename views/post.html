@@ -20,6 +20,9 @@
                     </div>
                     {% endif %}
                     <p>{{marked(post.content) | safe}}</p>
+                    <p>
+                        <a href="/posts?name={{post.category.name}}" class="tag is-primary">{{post.category.name}}</a>
+                    </p>
                 </div>
                 
                 <div class="social-share has-text-centered"></div>

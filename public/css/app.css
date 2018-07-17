@@ -10,6 +10,12 @@
 a:hover {
     text-decoration: none !important;
 }
+a {
+    text-decoration: none !important;
+}
+.card-content {
+    padding: .8rem;
+}
 .sign-box {
     max-width: 400px;
     margin: 50px auto;
@@ -68,7 +74,11 @@ a:hover {
     padding: 0 20px;
     display: flex;
 }
-  
+
+.editor-header .right-box .select {
+    margin-right: 20px;
+}
+
 .margin-top {
     margin-top: 20px;
 }

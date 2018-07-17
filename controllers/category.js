@@ -28,5 +28,4 @@ module.exports = {
         ctx.flash = { success: '删除分类成功' }
         ctx.redirect('/category')
     }
-
 }

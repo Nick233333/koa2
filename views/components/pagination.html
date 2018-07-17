@@ -1,0 +1,12 @@
+{%  if 1 < pageCount and pageCount >= currentPage  %}
+<nav class="has-text-centered margin-top">
+    {%  if currentPage !== 1 %}
+    <a href="?page={{currentPage - 1}}" class="button is-primary is-outlined">上一页</a>
+    {% endif %}
+    {%  if currentPage !== pageCount %}
+    <a href="?page={{currentPage + 1}}" class="button is-info is-outlined">下一页</a>
+    {% endif %}
+</nav>
+{% else %}
+<p class="has-text-centered margin-top is-size-7 has-text-grey">没有更多了... </p>
+{% endif %}
