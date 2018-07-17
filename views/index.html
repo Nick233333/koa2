@@ -27,12 +27,16 @@
             </div>
             {% endfor %}
             {%  if 1 < pageCount and pageCount >= currentPage  %}
-            <nav class="has-text-centered margin-top">
-                {%  if currentPage !== 1 %}
-                <a href="?page={{currentPage - 1}}" class="button is-primary is-outlined">上一页</a>
+            <nav class="pagination is-small margin-top" role="navigation" aria-label="pagination">
+                {%  if currentPage === 1 %}
+                <a disabled href="javascript:;" class="pagination-previous button is-small is-primary is-outlined">上一页</a>
+                {% else %}
+               <a href="?page={{currentPage - 1}}" class="pagination-previous button is-small is-primary is-outlined">上一页</a> 
                 {% endif %}
-                {%  if currentPage !== pageCount %}
-                <a href="?page={{currentPage + 1}}" class="button is-info is-outlined">下一页</a>
+                {%  if currentPage === pageCount %}
+                <a disabled href="javascript:;" class="pagination-next button is-small is-info is-outlined">下一页</a>
+                {% else %}
+                <a href="?page={{currentPage + 1}}" class="pagination-next button is-small is-info is-outlined">下一页</a>
                 {% endif %}
             </nav>
             {% else %}

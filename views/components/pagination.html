@@ -1,11 +1,48 @@
 {%  if 1 < pageCount and pageCount >= currentPage  %}
-<nav class="has-text-centered margin-top">
-    {%  if currentPage !== 1 %}
-    <a href="?page={{currentPage - 1}}" class="button is-primary is-outlined">上一页</a>
+<nav class="pagination is-small margin-top is-centered" role="navigation" aria-label="pagination">
+    {# 上一页 #}
+    {% if currentPage === 1 %}
+    <a class="pagination-previous button is-primary is-outlined" disabled>上一页</a>
+    {% else %}
+    <a href="{{baseUrl + (currentPage - 1)}}" class="pagination-previous button is-primary is-outlined">上一页</a>
     {% endif %}
-    {%  if currentPage !== pageCount %}
-    <a href="?page={{currentPage + 1}}" class="button is-info is-outlined">下一页</a>
+    {# 下一页 #}
+    {% if currentPage === pageCount %}
+    <a class="pagination-previous button is-small is-info is-outlined" disabled>下一页</a>
+    {% else %}
+    <a href="{{baseUrl + (currentPage + 1)}}" class="pagination-next button is-small is-info is-outlined">下一页</a>
     {% endif %}
+    <ul class="pagination-list">
+        {# 第一页 #}
+        {% if currentPage == 1 %}
+        <li><a href="{{baseUrl + 1}}" class="pagination-link is-current" aria-label="Goto page 1">1</a></li>
+        {% else %}
+        <li><a href="{{baseUrl + 1}}" class="pagination-link" aria-label="Goto page 1">1</a></li>
+        {% endif %}
+
+        {% if pageStart > 1 %}
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
+        {% endif %}
+        {# 页码 #}
+        
+        {# 渲染当前页和当前页的上下一页 #}
+        {% for i in range(pageStart + 1, pageEnd) %}
+            {% if i == currentPage  %}
+            <li><a class="pagination-link is-current" aria-label="Goto page {{i}}">{{i}}</a></li>
+            {% else %}
+            <li><a href="{{baseUrl + i}}" class="pagination-link" aria-label="Goto page {{i+1}}">{{i}}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if pageEnd < pageCount %}
+        <li><span class="pagination-ellipsis">&hellip;</span></li>
+        {% endif %}
+        {# 最后一页 #}
+        {% if currentPage == pageCount%}
+        <li><a href="{{baseUrl + pageCount}}" class="pagination-link is-current" aria-label="Goto page {{pageCount}}">{{pageCount}}</a></li>
+        {% else %}
+        <li><a href="{{baseUrl + pageCount}}" class="pagination-link" aria-label="Goto page {{pageCount}}">{{pageCount}}</a></li>
+        {% endif %}
+    </ul>
 </nav>
 {% else %}
 <p class="has-text-centered margin-top is-size-7 has-text-grey">没有更多了... </p>

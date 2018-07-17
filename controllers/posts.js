@@ -4,20 +4,35 @@ const CategoryModel = require('../models/category')
 
 module.exports = {
     async index(ctx, next) {
+        
+        const currentPage = parseInt(ctx.query.page) || 1
         const c_name = ctx.query.name
         let c_id
         if (c_name) {
-        const cateogry = await CategoryModel.findOne({ name: c_name })
+            const cateogry = await CategoryModel.findOne({ name: c_name })
             c_id = cateogry._id
         }
+        const pageSize = 15
         const query = c_id ? { category: c_id } : {}
-        const posts = await PostsModel.find(query)
-        .populate([
-            { path: 'category', select: ['name'] }
-        ]);
+        const allPostsCount = await PostsModel.find(query).count()
+        const pageCount = Math.ceil(allPostsCount / pageSize)
+        const pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1
+        const pageEnd = pageStart + 4 >= pageCount ? pageCount : pageStart + 4
+        const posts = await PostsModel.find(query).skip((currentPage - 1) * pageSize).limit(pageSize)
+                    .populate([
+                        { path: 'category', select: ['name'] }
+                    ]);
+        const baseUrl = c_name ? `${ctx.path}?c=${c_name}&page=` : `${ctx.path}?page=`
         await ctx.render('posts_list', {
             title: '文章',
-            posts
+            posts,
+            pageSize,
+            currentPage,
+            allPostsCount,
+            pageCount,
+            pageStart,
+            pageEnd,
+            baseUrl
 		})
 	},
     async create(ctx, next) {
