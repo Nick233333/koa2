@@ -1,6 +1,7 @@
 const PostsModel = require('../models/posts');
 const CommentsModel = require('../models/comments');
 const CategoryModel = require('../models/category')
+let validator = require('validator');
 let moment = require('moment');
 moment.locale('zh-cn');
 
@@ -21,9 +22,9 @@ module.exports = {
         const pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1
         const pageEnd = pageStart + 4 >= pageCount ? pageCount : pageStart + 4
         const posts = await PostsModel.find(query).skip((currentPage - 1) * pageSize).limit(pageSize)
-                    .populate([
-                        { path: 'category', select: ['name'] }
-                    ]);
+                            .populate([
+                                { path: 'category', select: ['name'] }
+                            ]);
         const baseUrl = c_name ? `${ctx.path}?c=${c_name}&page=` : `${ctx.path}?page=`
         for (const post of posts) {
             post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
@@ -49,11 +50,11 @@ module.exports = {
             })
             return;
         }
-        if (!ctx.request.body.title) {
+        if (validator.trim(ctx.request.body.title) === '') {
             ctx.flash = { warning: '文章标题不能为空' };
 			return ctx.redirect('back');
         }
-        if (!ctx.request.body.content) {
+        if (validator.trim(ctx.request.body.content) === '') {
             ctx.flash = { warning: '文章内容不能为空' };
 			return ctx.redirect('back');
         }
@@ -72,6 +73,9 @@ module.exports = {
                 { path: 'author', select: 'name' },
                 { path: 'category', select: ['title', 'name'] }
             ]);
+            await PostsModel.findByIdAndUpdate(ctx.params.id, {
+                pv: post.pv + 1
+            })
             const comments = await CommentsModel.find({ postId: ctx.params.id })
             .populate({ path: 'from', select: 'name' })
             await ctx.render('post', {
@@ -79,6 +83,7 @@ module.exports = {
                 post,
                 comments
             })
+            
         } catch (error) {
             ctx.flash = { warning: '文章不存在' };
 			return ctx.redirect('back');

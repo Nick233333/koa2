@@ -9,13 +9,12 @@ module.exports = {
         const allPostsCount = await PostsModel.find(query).count()
         const pageCount = Math.ceil(allPostsCount / pageSize) 
         const posts = await PostsModel.find(query).skip((currentPage - 1) * pageSize).limit(pageSize)
-        .populate([
-            { path: 'category', select: ['name'] }
-        ]);
+                            .populate([
+                                { path: 'category', select: ['name'] }
+                            ]);
         for (const post of posts) {
             post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
         }
-        const baseUrl = `${ctx.path}?page=`
 		await ctx.render('index', {
             title: 'koa2 + mongodb - 博客系统',
             posts,
