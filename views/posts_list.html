@@ -18,8 +18,8 @@
                     <div class="content">
                         <a href="/posts/{{post._id}}">{{post.title}}</a>
                         <div class="tags is-pulled-right">
-                            <span title="流量数" class="tag has-text-primary">{{ post.pv }}</span>
-                            <span title="发布时间" class="tag has-text-danger">aaa</span>
+                            <span title="浏览数" class="tag has-text-primary">{{ post.pv }}</span>
+                            <span title="发布时间" class="tag has-text-danger">{{ post.meta.date }}</span>
                             <span title="分类" class="tag has-text-info">{{ post.category.name }}</span>
                         </div>
                     </div>
@@ -30,4 +30,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script src="//cdn.bootcss.com/moment.js/2.22.1/moment.min.js"></script>
+<script src="//cdn.bootcss.com/moment.js/2.22.1/locale/zh-cn.js"></script>
 {% endblock %}

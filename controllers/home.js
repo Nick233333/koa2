@@ -1,4 +1,6 @@
 const PostsModel = require('../models/posts');
+let moment = require('moment');
+moment.locale('zh-cn');
 module.exports = {
 	async index(ctx, next) {
         const query = {}
@@ -10,6 +12,9 @@ module.exports = {
         .populate([
             { path: 'category', select: ['name'] }
         ]);
+        for (const post of posts) {
+            post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
+        }
         const baseUrl = `${ctx.path}?page=`
 		await ctx.render('index', {
             title: 'koa2 + mongodb - 博客系统',

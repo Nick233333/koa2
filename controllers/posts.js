@@ -1,6 +1,8 @@
 const PostsModel = require('../models/posts');
 const CommentsModel = require('../models/comments');
 const CategoryModel = require('../models/category')
+let moment = require('moment');
+moment.locale('zh-cn');
 
 module.exports = {
     async index(ctx, next) {
@@ -23,6 +25,9 @@ module.exports = {
                         { path: 'category', select: ['name'] }
                     ]);
         const baseUrl = c_name ? `${ctx.path}?c=${c_name}&page=` : `${ctx.path}?page=`
+        for (const post of posts) {
+            post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
+        }
         await ctx.render('posts_list', {
             title: '文章',
             posts,
