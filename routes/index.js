@@ -30,6 +30,8 @@ module.exports = (app) => {
     router.get('/category/new', isAdmin, Category.create)
     router.post('/category/new', isAdmin, Category.create)
     router.get('/category/:id/delete', isAdmin, Category.destroy)
+    router.get('/category/:id/edit', isAdmin, Category.edit)
+    router.post('/category/edit', isAdmin, Category.edit) 
 
     app.use(router.routes());
     app.use(router.allowedMethods());
