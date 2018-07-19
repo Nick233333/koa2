@@ -21,7 +21,6 @@ module.exports = {
     async edit(ctx, next) {
         if (ctx.method === 'GET') {
             const category = await CategoryModel.findById(ctx.params.id)
-            console.log(category)
             if (!category) {
                 throw new Error('分类不存在')
                 ctx.flash = { warning: '分类不存在' };
