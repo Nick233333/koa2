@@ -12,38 +12,15 @@
     <link rel="dns-prefetch" href="//cdn.bootcss.com" />
     <link href="//cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
     {% block css %}{% endblock %}
-    <link rel="stylesheet" href="/public/css/app.css">
+    <link rel="stylesheet" href="/dist/css/app.css">
 </head>
 <body>
     {% include "views/components/notification.html" %}
     {% block body %}
     <div>base</div>
     {% endblock %}
-    <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-        if ($navbarBurgers.length > 0) {
-            $navbarBurgers.forEach(function ($el) {
-                $el.addEventListener('click', function () {
-                    var target = $el.dataset.target;
-                    var $target = document.getElementById(target);
-                    $el.classList.toggle('is-active');
-                    $target.classList.toggle('is-active');
-                });
-            });
-        }
-    });
-    
-    $(function(){
-        if ($('.notifications')) {
-            setTimeout(function(){
-                $('.notifications').fadeOut()
-            }, 2000)
-        }
-    })
-
-    </script> 
+    <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/dist/js/app.js"></script> 
     {% block script %}
     {% endblock %}
 </body>

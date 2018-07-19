@@ -25,6 +25,7 @@
         <a class="navbar-item" href="/">Koa2</a>
     </div>
 </nav>
+{% endblock %}
 {% block script %}
 <script src="//cdn.bootcss.com/marked/0.3.19/marked.min.js"></script>
 <script>
@@ -34,5 +35,4 @@
         $('#editor .show').html(marked($(this).val()))
     })
 </script>
-{% endblock %}
 {% endblock %}
