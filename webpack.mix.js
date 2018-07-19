@@ -14,9 +14,9 @@ if (mix.inProduction()) {
     mix.version();
 }
 
-mix.js('resources/js/app.js', 'dist/js/')
-    .sass('resources//scss/app.scss', 'dist/css/')
-    .setPublicPath('dist');
+mix.js('resources/js/app.js', 'public/js/')
+    .sass('resources//scss/app.scss', 'public/css/')
+    .setPublicPath('public');
 
 // Full API
 // mix.js(src, output);
