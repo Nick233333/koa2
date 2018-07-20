@@ -21,7 +21,7 @@ module.exports = {
         const pageCount = Math.ceil(allPostsCount / pageSize)
         const pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1
         const pageEnd = pageStart + 4 >= pageCount ? pageCount : pageStart + 4
-        const posts = await PostsModel.find(query).skip((currentPage - 1) * pageSize).limit(pageSize)
+        const posts = await PostsModel.find(query).sort({'_id': -1}).skip((currentPage - 1) * pageSize).limit(pageSize)
                             .populate([
                                 { path: 'category', select: ['name'] }
                             ]);

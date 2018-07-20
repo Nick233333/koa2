@@ -4,21 +4,20 @@ const redis_client = redis.createClient({db: process.env.REDIS_DB_CACHE, auth_pa
 module.exports = async (ctx, next) => {
     
     let key = ctx.host + ctx.url;
-    redis_client.get(key, function(err, res) {
-        let limit_num = 0;
+    let limit_num = 0;
+    redis_client.get(key, async (err, res) => {
+        
         if (res === null) {
             limit_num = 1;
         } else {
             limit_num = parseInt(res) + 1;
-        }
-        redis_client.set(key, limit_num, 'EX', 60, function(err, res) {
-            if (res === 'OK') {
-                if (limit_num >= 5) {
-                    ctx.flash = { warning: '发布次数太频繁，稍后再试' }
-                    return ctx.redirect('/')
-                } 
-            }   
-        })
+        }    
+        if (limit_num > 5) {
+            ctx.flash = { warning: '发布次数太频繁，稍后再试' }
+            await ctx.redirect('/')
+        } else {
+            redis_client.set(key, limit_num, 'EX', 60)
+        }   
     })
     
     await next()
