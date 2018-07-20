@@ -37,7 +37,7 @@ app.use(views(path.join(__dirname, 'views'), {
 	map: { html: 'nunjucks' }
 }));
 app.use(serve(
-	path.join(__dirname, CONFIG.static_path)
+	path.join(__dirname, 'public')
 ));
 app.use(session({
 	key: CONFIG.session.key,

@@ -8,5 +8,5 @@ module.exports = {
     mongodb: process.env.MONGODB,
     redis_password: process.env.REDIS_PASSWORD || '',
     redis_db_session: process.env.REDIS_DB_SESSION || '',
-    static_path: process.env.STATIC_PATH
+    redis_db_cache: process.env.REDIS_DB_CACHE || ''
 }

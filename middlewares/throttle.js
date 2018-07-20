@@ -1,6 +1,6 @@
 const config = require('../config/config')
 const redis = require("redis");
-const redis_client = redis.createClient({db: 3, auth_pass: config.redis_password});
+const redis_client = redis.createClient({db: process.env.REDIS_DB_CACHE, auth_pass: config.redis_password});
 module.exports = async (ctx, next) => {
     
     let key = ctx.host + ctx.url;
