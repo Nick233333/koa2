@@ -13,8 +13,10 @@ module.exports = {
         let c_id
         if (c_name) {
             const cateogry = await CategoryModel.findOne({ name: c_name })
-            c_id = cateogry._id
-        }
+            if (cateogry) {
+                c_id = cateogry._id
+            }
+        }  
         const pageSize = 15
         const query = c_id ? { category: c_id } : {}
         const allPostsCount = await PostsModel.find(query).count()

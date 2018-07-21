@@ -1,15 +1,11 @@
 {%  if 1 < pageCount and pageCount >= currentPage  %}
 <nav class="pagination is-small margin-top is-centered" role="navigation" aria-label="pagination">
     {# 上一页 #}
-    {% if currentPage === 1 %}
-    <a class="pagination-previous button is-primary is-outlined" disabled>上一页</a>
-    {% else %}
+    {% if currentPage !== 1 %}
     <a href="{{baseUrl + (currentPage - 1)}}" class="pagination-previous button is-primary is-outlined">上一页</a>
     {% endif %}
     {# 下一页 #}
-    {% if currentPage === pageCount %}
-    <a class="pagination-previous button is-small is-info is-outlined" disabled>下一页</a>
-    {% else %}
+    {% if currentPage !== pageCount %}
     <a href="{{baseUrl + (currentPage + 1)}}" class="pagination-next button is-small is-info is-outlined">下一页</a>
     {% endif %}
     <ul class="pagination-list">
@@ -45,5 +41,5 @@
     </ul>
 </nav>
 {% else %}
-<p class="has-text-centered margin-top is-size-7 has-text-grey">没有更多了... </p>
+<p class="has-text-centered margin-top is-size-6 has-text-grey">👀没有更多了... 🙄</p>
 {% endif %}

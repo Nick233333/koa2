@@ -40,7 +40,7 @@ module.exports = {
         </html>
         `;
         let mailOptions = {
-            from: config.email_user, // 发件人
+            from: `koa2 <${config.email_user}>`, // 发件人
             to: email, // 收件人
             subject: 'koa2.hellocode.name 账号激活', // 主题
             // 发送text或者html格式
