@@ -46,24 +46,3 @@ $('#content').keydown(function() {
         showDialog();
     }
 })
-function setData(key, value) {
-    localStorage.setItem(key, value)
-}
-function delData(key) {
-    localStorage.removeItem(key)
-}
-var title = 'post-title';
-var content = 'post-content';
-$('#post-content').keydown(function() {
-    var content = $(this).val();
-    setData(title, content)
-});
-$('#post-title').keydown(function() {
-    var title = $(this).val();
-    setData(content, title)
-});
-$('#post-from').submit(function() {
-    delData(title)
-    delData(content)
-})
-

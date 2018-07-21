@@ -28,11 +28,5 @@
 {% endblock %}
 {% block script %}
 <script src="//cdn.bootcss.com/marked/0.3.19/marked.min.js"></script>
-<script>
-    var input = $('#editor .input')
-    $('#editor .show').html(marked(input.val()))
-    input.on('input', function() {
-        $('#editor .show').html(marked($(this).val()))
-    })
-</script>
+<script src="/js/post.js"></script>
 {% endblock %}
