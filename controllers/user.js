@@ -56,13 +56,13 @@ module.exports = {
     },
     async activate(ctx, next) {
         let code = ctx.params.code;
-        redis_client.get(code, (err, res) => {
+        await redis_client.get(code, async (err, res) => {
             if (res !== null) {
-                UsersModel.findOneAndUpdate({ email: res }, {
+                await UsersModel.findOneAndUpdate({ email: res }, {
                     isActive: true,
                 });
                 redis_client.del(code) 
-            }          
+            } 
         });
         ctx.flash = { success: '激活成功' }; 
         ctx.redirect('/');
