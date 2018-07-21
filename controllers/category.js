@@ -1,4 +1,5 @@
 const CategoryModel = require('../models/category')
+const PostsModel = require('../models/posts');
 
 module.exports = {
     async list(ctx, next) {
@@ -52,6 +53,7 @@ module.exports = {
             return ctx.redirect('back')
         }
         await CategoryModel.findByIdAndRemove(id)
+        await PostsModel.deleteMany({ category: id})
         ctx.flash = { success: '删除分类成功' }
         ctx.redirect('/category')
     }
