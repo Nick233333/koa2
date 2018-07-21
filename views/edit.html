@@ -1,8 +1,8 @@
 {% extends 'views/base.html' %}
 {% block body %}
-<form action="/posts/{{post._id}}/edit" method="POST" id="post-from">
+<form action="/posts/{{post._id}}/edit" method="POST">
     <header class="editor-header">
-        <input id="post-title" required name="title" value={{post.title}} class="input is-shadowless is-radiusless" type="text" placeholder="输入文章标题...">
+        <input required name="title" value={{post.title}} class="input is-shadowless is-radiusless" type="text" placeholder="输入文章标题...">
         <div class="right-box">
             <div class="select is-small">
                 <select name="category" required>
@@ -16,7 +16,7 @@
         </div>
     </header>
     <div id="editor">
-        <textarea id="post-content" required autofocus="autofocus" name="content" class="input">{{post.content}}</textarea>
+        <textarea required autofocus="autofocus" name="content" class="input">{{post.content}}</textarea>
         <div class="show content markdown-body"></div>
     </div>
 </form>
