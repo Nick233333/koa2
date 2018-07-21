@@ -2,7 +2,9 @@ const bcrypt = require('bcryptjs')
 let validator = require('validator');
 const UsersModel = require('../models/users')
 const helpers = require('../functions/helpers')
-
+const config = require('../config/config')
+const redis = require("redis");
+const redis_client = redis.createClient({db: process.env.REDIS_DB_CACHE, auth_pass: config.redis_password});
 module.exports = {
 	async signup(ctx, next) {
 		if (ctx.method === 'GET') {
@@ -40,16 +42,31 @@ module.exports = {
 			password
 		};
 		try {
-			const result = await UsersModel.create(user);
-            ctx.flash = { success: '注册成功' };
-            helpers.userInfo(result, ctx);
-			ctx.redirect('/');
+            const result = await UsersModel.create(user);
+            let code = Math.floor(new Date()) + Math.random();
+            redis_client.set(code, email);
+            helpers.sendEmail(email, code);
+            ctx.flash = { success: '注册成功，请前往邮箱激活账号' };
+            ctx.redirect('/');
 			
 		} catch (error) {
 			ctx.flash = { warning: '用户名或邮箱已存在，请更换' };
 			return ctx.redirect('back');
 		}
-	},
+    },
+    async activate(ctx, next) {
+        let code = ctx.params.code;
+        redis_client.get(code, (err, res) => {
+            if (res !== null) {
+                UsersModel.findOneAndUpdate({ email: res }, {
+                    isActive: true,
+                });
+                redis_client.del(code) 
+            }          
+        });
+        ctx.flash = { success: '激活成功' }; 
+        ctx.redirect('/');
+    },
 	async signin(ctx, next) {
 		if (ctx.session.user) {
 			ctx.flash = { warning: '已登录' };
@@ -74,6 +91,10 @@ module.exports = {
         const user = await UsersModel.findOne({ name });
         
 		if (user && await bcrypt.compare(password, user.password)) {
+            if (user.isActive === false) {
+                ctx.flash = { warning: '邮箱未激活，请先激活邮箱' };
+                return ctx.redirect('back');
+            }
             if (user.isAuth === false) {
                 ctx.flash = { warning: '账号权限异常，请联系管理员' };
                 return ctx.redirect('back');
@@ -90,10 +111,9 @@ module.exports = {
 			return ctx.redirect('back');
 		}
 	},
-	signout(ctx, next) {
+	async signout(ctx, next) {
 		ctx.session.user = null;
 		ctx.flash = { warning: '退出登录' };
-		ctx.redirect('/');
-	}
-
+		await ctx.redirect('/');
+    }
 }

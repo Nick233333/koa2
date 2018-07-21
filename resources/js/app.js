@@ -16,7 +16,7 @@ $(function(){
     if ($('.notifications')) {
         setTimeout(function(){
             $('.notifications').fadeOut()
-        }, 2000)
+        }, 3000)
     }
 })
 

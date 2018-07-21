@@ -9,7 +9,7 @@ const isLogin = require('../middlewares/is_login')
 const isAdmin = require('../middlewares/is_admin')
 const throttle = require('../middlewares/throttle')
 module.exports = (app) => {
-
+    router.get('/activate/:code', User.activate)
     router.get('/', Home.index)
     router.get('/about', About.index)
     router.get('/signup', User.signup)

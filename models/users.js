@@ -23,7 +23,11 @@ const UsersSchema = new Schema({
     isAuth: {
 		type: Boolean,
 		default: true
-	},
+    },
+    isActive: {
+        type: Boolean,
+		default: false
+    },
 	meta: {
 		createAt: {
 			type: Date,
