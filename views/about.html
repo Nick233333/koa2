@@ -1,11 +1,32 @@
 {% extends 'views/base.html' %} {% block body %}
 {% include "views/components/header.html" %}
-<div class="container">
-	<div class="columns">
-		<div class="column has-text-centered">
-			<h1 class="title is-3 is-spaced">{{title}}</h1>
-			<p class="subtitle is-5">{{ desc }}</p>
-		</div>	
-	</div>	
+<div class="container padding-10">
+    <div class="box">
+        <h2 class="title is-6">运行环境</h2>
+        <ul>
+            <li>腾讯云</li>
+            <li>Web 服务器 Nginx</li>
+            <li>NodeJS v10.0+</li>
+            <li>PM2</li>
+        </ul>
+        <h2 class="title is-6 margin-top">功能</h2>
+        <ul>
+            <li>登录注册及邮箱验证</li>
+            <li>文章分类</li>
+            <li>评论功能</li>
+            <li>文章CRUD</li>
+            <li>发布文章次数限制</li>
+            <li>用户权限</li>
+            <li>未完...</li>
+        </ul>
+        <h2 class="title is-6 margin-top">技术栈</h2>
+        <ul>
+            <li>NodeJS web 开发框架 Koa2</li>
+            <li>UI 框架 Bulma</li>
+            <li>Redis v4.0+</li>
+            <li>MongoDB v3.4+</li>
+            <li>未完...</li>
+        </ul>
+    </div>
 </div>
 {% endblock %}
