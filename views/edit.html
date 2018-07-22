@@ -1,5 +1,4 @@
-{% extends 'views/base.html' %}
-{% block body %}
+{% extends 'views/base.html' %}{% block body %}
 <form action="/posts/{{post._id}}/edit" method="POST">
     <header class="editor-header">
         <input required name="title" value={{post.title}} class="input is-shadowless is-radiusless" type="text" placeholder="输入文章标题...">
