@@ -15,8 +15,12 @@ module.exports = {
             const cateogry = await CategoryModel.findOne({ name: c_name })
             if (cateogry) {
                 c_id = cateogry._id
+            } else {
+                return ctx.render('posts_list', {
+                    title: '文章',
+                })    
             }
-        }  
+        }
         const pageSize = 15
         const query = c_id ? { category: c_id } : {}
         const allPostsCount = await PostsModel.find(query).count()
@@ -129,7 +133,8 @@ module.exports = {
         ctx.redirect(`/posts/${ctx.params.id}`)
     },
     async destroy(ctx, next) {
-        const post = await PostsModel.findById(ctx.params.id)
+        let id = ctx.params.id;
+        const post = await PostsModel.findById(id)
         if (!post) {
             throw new Error('文章不存在')
         }
@@ -137,7 +142,8 @@ module.exports = {
         if (post.author.toString() !== ctx.session.user._id) {
             throw new Error('没有权限')
         }
-        await PostsModel.findByIdAndRemove(ctx.params.id)
+        await PostsModel.findByIdAndRemove(id)
+        await CommentsModel.deleteMany({ postId: id })
         ctx.flash = { success: '删除文章成功' }
         ctx.redirect('/')
     }
