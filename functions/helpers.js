@@ -50,12 +50,12 @@ module.exports = {
                     <title>重置密码</title>
                 </head>
                 <body>
-                <h1>这是一封密码重置邮件，如果是您本人操作，请点击以下按钮继续：</h1>
-                <p>
+                <h3>这是一封密码重置邮件，如果是您本人操作，请点击下面链接继续：</h3>
+                <button>
                     <a href="${config.domain}/reset/${code}">
-                    ${config.domain}/reset/${code}
+                        重置密码
                     </a>
-                </p>
+                </button>
                 <p>如果您并没有执行此操作，您可以选择忽略此邮件。</p>
                 </body>
                 </html>
