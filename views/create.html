@@ -2,7 +2,7 @@
 {% block body %}
 <form action="/posts/new" method="POST" id="post-from">
     <header class="editor-header">
-        <input id="post-title" autofocus required name="title" class="input is-shadowless is-radiusless" autocomplete="off" autofocus="autofocus" type="text" placeholder="输入文章标题...">
+        <input id="post-title" autofocus required name="title" class="input is-shadowless is-radiusless" autocomplete="off" type="text" placeholder="输入文章标题...">
         <div class="right-box">
             <div class="select is-small">
                 <select name="category" required>
@@ -16,7 +16,7 @@
         </div>
     </header>
     <div id="editor">
-        <textarea id="post-content" required name="content" class="input"></textarea>
+        <textarea placeholder="请使用 Markdown 格式编写 :)" id="post-content" required name="content" class="input"></textarea>
         <div class="show content markdown-body"></div>
     </div>
 </form>

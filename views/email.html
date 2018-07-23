@@ -1,0 +1,22 @@
+{% extends 'views/base.html' %} {% block body %}
+{% include "views/components/header.html" %}
+<div class="container padding-10">
+    <div class="box sign-box">
+        <form action="/email" method="POST">
+            <div class="field">
+                <label class="label">邮箱</label>
+                <div class="control">
+                    <input required class="input" name="email" type="email" placeholder="请输入你的邮箱">
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-primary">确认</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,29 @@
+{% extends 'views/base.html' %} {% block body %}
+{% include "views/components/header.html" %}
+<div class="container padding-10">
+    <div class="box sign-box">
+        <form action="/reset/{{ code }}" method="POST">
+            <div class="field">
+                <label class="label">密码</label>
+                <div class="control">
+                    <input required class="input" name="password" type="password" autocomplete="off" placeholder="请输入密码">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">确认密码</label>
+                <div class="control">
+                    <input required autocomplete="off" class="input" name="repassword" type="password" placeholder="确认密码">
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control">
+                    <input type="hidden" name="email" value="{{ email }}">
+                    <button class="button is-primary">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+

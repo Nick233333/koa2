@@ -45,7 +45,7 @@ module.exports = {
             const result = await UsersModel.create(user);
             let code = Math.floor(new Date()) + Math.random();
             redis_client.set(code, email);
-            helpers.sendEmail(email, code);
+            helpers.sendEmail(email, code, 'signin');
             ctx.flash = { success: '注册成功，请前往邮箱激活账号' };
             ctx.redirect('/');
 			
@@ -115,5 +115,66 @@ module.exports = {
 		ctx.session.user = null;
 		ctx.flash = { warning: '退出登录' };
 		await ctx.redirect('/');
+    },
+    async email(ctx, next) {
+        if (ctx.method === 'GET') {
+			await ctx.render('email', {
+				title: '找回密码'
+			})
+		  	return;
+        }
+        const { email } = ctx.request.body;
+        if (validator.isEmail(email) === false) {
+			ctx.flash = { warning: '邮箱格式不正确' };
+			return ctx.redirect('back');
+        }
+        let user = await UsersModel.findOne({ email: email });
+        if (!user) {
+            ctx.flash = { warning: '邮箱存在' };
+			return ctx.redirect('back');
+        }
+        let code = Math.floor(new Date()) + Math.random();
+        await redis_client.set(code, email);
+        await helpers.sendEmail(email, code);
+        ctx.flash = { success: '邮件已发送' };
+        return ctx.redirect('back');
+    },
+    async reset(ctx, next) {
+        if (ctx.method === 'GET') {       
+            let email = '';
+            let code = ctx.params.code;
+            redis_client.get(code, async (err, res) => {
+                    
+                if (res !== null) {
+                    email = res; 
+                    await ctx.render('reset', {
+                        title: '设置密码',
+                        email: email,
+                        code: code
+                    }) 
+                } else {
+                    ctx.flash = { warning: '邮件已过期' };
+                    return ctx.redirect('/');
+                }
+            })    
+        }
+        const { password, repassword, email } = ctx.request.body;
+        if (validator.isLength(password, {min:6}) === false) {
+			ctx.flash = { warning: '密码长度不符合，至少6位' };
+			return ctx.redirect('back');
+		}
+		if (validator.equals(password, repassword) === false) {
+			ctx.flash = { warning: '密码不一致' };
+			return ctx.redirect('back');
+        }
+        await redis_client.del(ctx.params.code)
+        const salt = await bcrypt.genSalt(10);
+    	// 对密码进行加密
+        let new_password = await bcrypt.hash(password, salt);
+        await UsersModel.findOneAndUpdate({ email: email }, {
+            password: new_password
+        })
+        ctx.flash = { success: '密码重置成功' };
+		return ctx.redirect('/');
     }
 }
