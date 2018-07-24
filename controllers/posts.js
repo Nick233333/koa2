@@ -23,7 +23,7 @@ module.exports = {
         }
         const pageSize = 15
         const query = c_id ? { category: c_id } : {}
-        const allPostsCount = await PostsModel.find(query).count()
+        const allPostsCount = await PostsModel.find(query).countDocuments()
         const pageCount = Math.ceil(allPostsCount / pageSize)
         const pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1
         const pageEnd = pageStart + 4 >= pageCount ? pageCount : pageStart + 4

@@ -11,7 +11,7 @@ const flash = require('./middlewares/flash')
 const router = require('./routes');
 const error = require('./middlewares/error_handler')
 const CONFIG = require('./config/config');
-mongoose.connect(CONFIG.mongodb);
+mongoose.connect(CONFIG.mongodb, { useNewUrlParser: true });
 
 marked.setOptions({
 	renderer: new marked.Renderer(),

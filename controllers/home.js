@@ -6,7 +6,7 @@ module.exports = {
         const query = {}
         const pageSize = 15
         const currentPage = parseInt(ctx.query.page) || 1
-        const allPostsCount = await PostsModel.find(query).count()
+        const allPostsCount = await PostsModel.find(query).countDocuments()
         const pageCount = Math.ceil(allPostsCount / pageSize) 
         const posts = await PostsModel.find(query).sort({'_id': -1}).skip((currentPage - 1) * pageSize).limit(pageSize)
                             .populate([
