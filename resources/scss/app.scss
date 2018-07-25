@@ -7,11 +7,19 @@
     transition: background-color 5000s ease-in-out 0s;    
     font-weight: 500;
 }
+
 a:hover {
     text-decoration: none !important;
 }
 a {
     text-decoration: none !important;
+}
+.content ul {
+    list-style: none;
+    margin: 0;
+}
+.mt-20 {
+    margin-top: 20px;
 }
 .card-content {
     padding: .8rem;

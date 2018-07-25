@@ -1,0 +1,34 @@
+<div class="column is-3">
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title has-text-grey is-size-7 has-text-centered" style="display: block;">
+                最多阅读文章
+            </p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <ul>
+                    {% for post in topPosts %}
+                    <li><a href="/posts/{{ post._id }}" class="is-size-7">{{ post.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-20">
+        <header class="card-header">
+            <p class="card-header-title has-text-grey is-size-7 has-text-centered" style="display: block;">
+                最新发布文章
+            </p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <ul>
+                    {% for post in newPosts %}
+                    <li><a href="/posts/{{ post._id }}" class="is-size-7">{{ post.title }}</a></li>
+                    {% endfor %}
+                </ul>     
+            </div>
+        </div>
+    </div>
+</div>

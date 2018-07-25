@@ -1,4 +1,4 @@
-<nav id="navbar" class="navbar has-shadow">
+<nav id="navbar" class="navbar has-shadow" role="navigation" aria-label="dropdown navigation">
     <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item has-text-black is-size-4" href="/">
@@ -12,7 +12,7 @@
                 <span></span>
             </div>
         </div>
-        <div id="navMenu" class="navbar-menu has-text-centered">
+        <div id="navMenu" class="navbar-menu has-text-centered is-transparent">
             <div class="navbar-start">
                 <a class="navbar-item" href="/">主页</a>
                 <a class="navbar-item" href="/posts?name=前端">前端</a>
@@ -23,18 +23,18 @@
             <div class="navbar-end">
                 {% if ctx.session.user.isAdmin %}
                 <div class="navbar-item">
-                    <a class="button is-small is-info" href="/category">分类</a>
+                    <a class="button is-small is-info" href="/category">分类管理</a>
                 </div>
                 {% endif %}
                 {% if ctx.session.user %}
                 <div class="navbar-item">
-                    <a class="button is-small is-primary" href="/posts/new">写文章</a>
+                    <a class="button is-small is-primary" href="/posts/new">创作文章</a>
                 </div>
-                <div class="navbar-item has-text-link">
-                    {{ctx.session.user.name}}
-                </div>
-                <div class="navbar-item">
-                    <a href="/signout" class="has-text-danger">退出</a>
+                <div class="navbar-item has-text-link has-dropdown is-hoverable">
+                    <a href="javascript:;" class="navbar-link">{{ctx.session.user.name}}</a>
+                    <div class="navbar-dropdown">
+                        <a href="/signout" class="navbar-item has-text-danger">退出</a>
+                    </div>    
                 </div>
                 {% else %}
                 <div class="navbar-item">

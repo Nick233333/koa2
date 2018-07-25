@@ -10,7 +10,7 @@
 </section>
 <div class="container margin-top">
     <div class="columns margin-0">
-        <div class="column is-8 is-offset-2">
+        <div class="column is-9">
             {% for post in posts %}
             <div class="card">
                 <div class="card-content">
@@ -27,6 +27,7 @@
             {% endfor %}
             {% include "views/components/pagination.html" %}
         </div>
+        {% include "views/components/list_right.html" %}
     </div>
 </div>
 {% endblock %}

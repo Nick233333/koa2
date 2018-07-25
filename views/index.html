@@ -10,12 +10,12 @@
 </section>
 <div class="container margin-top">
     <div class="columns margin-0">
-        <div class="column is-8 is-offset-2">
+        <div class="column is-9">
             {% for post in posts %}
             <div class="card">
                 <div class="card-content">
                     <div class="content">
-                        <a href="/posts/{{post._id}}">{{post.title}}</a>
+                        <a class="is-size-7" href="/posts/{{post._id}}">{{post.title}}</a>
                         <div class="tags is-pulled-right is-hidden-mobile">
                             <span title="浏览数" class="tag has-text-primary">{{ post.pv }}</span>
                             <span title="发布时间" class="tag has-text-danger">{{ post.meta.date }}</span>
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>         
             {% endfor %}
             {%  if 1 < pageCount and pageCount >= currentPage  %}
             <nav class="pagination is-small margin-top" role="navigation" aria-label="pagination">
@@ -41,6 +41,40 @@
             {% else %}
             <p class="has-text-centered margin-top is-size-6 has-text-grey">👀没有更多了... 🙄</p>
             {% endif %}
+        </div>
+        <div class="column is-3">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title has-text-grey is-size-7 has-text-centered" style="display: block;">
+                        最多阅读文章
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <ul>
+                            {% for post in topPosts %}
+                            <li><a href="/posts/{{ post._id }}" class="is-size-7">{{ post.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-20">
+                <header class="card-header">
+                    <p class="card-header-title has-text-grey is-size-7 has-text-centered" style="display: block;">
+                        最新发布文章
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <ul>
+                            {% for post in newPosts %}
+                            <li><a href="/posts/{{ post._id }}" class="is-size-7">{{ post.title }}</a></li>
+                            {% endfor %}
+                        </ul>     
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
