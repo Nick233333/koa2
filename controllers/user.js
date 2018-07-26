@@ -5,6 +5,9 @@ const helpers = require('../functions/helpers')
 const config = require('../config/config')
 const redis = require("redis");
 const redis_client = redis.createClient({db: process.env.REDIS_DB_CACHE, auth_pass: config.redis_password});
+const { promisify } = require('util');
+const getAsync = promisify(redis_client.get).bind(redis_client);
+
 module.exports = {
 	async signup(ctx, next) {
 		if (ctx.method === 'GET') {
@@ -140,23 +143,21 @@ module.exports = {
         return ctx.redirect('back');
     },
     async reset(ctx, next) {
-        if (ctx.method === 'GET') {       
+        if (ctx.method === 'GET') {
             let email = '';
             let code = ctx.params.code;
-            redis_client.get(code, async (err, res) => {
-                    
-                if (res !== null) {
-                    email = res; 
-                    await ctx.render('reset', {
-                        title: '设置密码',
-                        email: email,
-                        code: code
-                    }) 
-                } else {
-                    ctx.flash = { warning: '邮件已过期' };
-                    return ctx.redirect('/');
-                }
-            })    
+            const res = await getAsync(code);
+            if (res !== null) {
+                email = res;
+                return ctx.render('reset', {
+                    title: '设置密码',
+                    email: email,
+                    code: code
+                })
+            } else {
+                ctx.flash = {warning: '邮件已过期'};
+                return ctx.redirect('/');
+            }
         }
         const { password, repassword, email } = ctx.request.body;
         if (validator.isLength(password, {min:6}) === false) {
