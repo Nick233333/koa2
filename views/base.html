@@ -27,7 +27,7 @@
     <script src="/js/app.js"></script>
     <script>
     var userName = '{{ctx.flash.userName}}';
-    var socket = io.connect('http://127.0.0.1:3000');
+    var socket = io.connect();
     if (userName) {
         socket.emit('news', { userName: userName });
     } 
