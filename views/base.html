@@ -32,10 +32,10 @@
         socket.emit('news', { userName: userName });
     } 
     socket.on('news_posts', function(data) {
-        $('.notifications').show()
-        $('.is-success').text(data.msg)
+        $('#noticeBox').show()
+        $('#noticeMsg').text(data.msg)
         setTimeout(function(){
-            $('.notifications').fadeOut()
+            $('#noticeBox').fadeOut()
         }, 3000)
     });
     </script>
