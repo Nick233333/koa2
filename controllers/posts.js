@@ -73,7 +73,7 @@ module.exports = {
         })
         
         const res = await PostsModel.create(post);
-        ctx.flash = { success: '发表文章成功' };
+        ctx.flash = { success: '发表文章成功', userName: ctx.session.user.name };
         ctx.redirect(`/posts/${res._id}`);
     },
     async show(ctx, next) {

@@ -53,6 +53,12 @@ app.use(flash());
 
 router(app);
 
-app.listen(process.env.PORT, () => {
+let server = app.listen(process.env.PORT, () => {
 	console.log(`server is running at http://127.0.0.1:${process.env.PORT}`)
+});
+let io = require('socket.io')(server);
+io.on('connection', function (socket) {
+    socket.on('news', function (data) {
+        socket.broadcast.emit('news_posts', { msg: `${ data.userName } 发布了新文章！`, userName: data.userName});
+    });
 });
