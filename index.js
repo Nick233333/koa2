@@ -27,10 +27,12 @@ marked.setOptions({
 const app = new Koa();
 
 app.keys = ['koa2'];
+let resources = require('./public/mix-manifest.json')
 
 app.use(async (ctx, next) => {
 	ctx.state.ctx = ctx
-	ctx.state.marked = marked
+    ctx.state.marked = marked
+    ctx.state.resources = resources
 	await next()
 })
 app.use(views(path.join(__dirname, 'views'), {
