@@ -137,7 +137,7 @@ module.exports = {
 			return ctx.redirect('back');
         }
         let code = Math.floor(new Date()) + Math.random();
-        await redis_client.set(code, email);
+        await redis_client.set(code, email, 'EX', 60 * 60 *24);
         await helpers.sendEmail(email, code);
         ctx.flash = { success: '邮件已发送' };
         return ctx.redirect('back');
