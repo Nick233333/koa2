@@ -2,7 +2,7 @@ require('dotenv').config()
 module.exports = {
 	port: process.env.PORT || 3000,
 	session: {
-		key: process.env.SESSION_KEY,
+		key: process.env.SESSION_KEY || '',
 		maxAge: 86400000
 	},
     mongodb: process.env.MONGODB,
@@ -11,5 +11,6 @@ module.exports = {
     redis_db_cache: process.env.REDIS_DB_CACHE || '',
     email_user: process.env.EMAIL_USER,
     email_password: process.env.EMAIL_PASSWORD,
-    domain: process.env.DOMAIN
+    domain: process.env.DOMAIN,
+    app_key: process.env.APP_KEY
 }

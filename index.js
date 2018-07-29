@@ -10,8 +10,8 @@ let redisStore = require('koa-redis');
 const flash = require('./middlewares/flash')
 const router = require('./routes');
 const error = require('./middlewares/error_handler')
-const CONFIG = require('./config/config');
-mongoose.connect(CONFIG.mongodb, { useNewUrlParser: true });
+const config = require('./config/config');
+mongoose.connect(config.mongodb, { useNewUrlParser: true });
 
 marked.setOptions({
 	renderer: new marked.Renderer(),
@@ -26,13 +26,14 @@ marked.setOptions({
                
 const app = new Koa();
 
-app.keys = ['koa2'];
+app.keys = [config.app_key];
 let resources = require('./public/mix-manifest.json')
 
 app.use(async (ctx, next) => {
 	ctx.state.ctx = ctx
     ctx.state.marked = marked
     ctx.state.resources = resources
+    ctx.state.dimain = config.domain
 	await next()
 })
 app.use(views(path.join(__dirname, 'views'), {
@@ -42,11 +43,11 @@ app.use(serve(
 	path.join(__dirname, 'public')
 ));
 app.use(session({
-	key: CONFIG.session.key,
-    maxAge: CONFIG.session.maxAge,
+	key: config.session.key,
+    maxAge: config.session.maxAge,
     store: redisStore({
-        auth_pass: CONFIG.redis_password,
-        db: CONFIG.redis_db_session
+        auth_pass: config.redis_password,
+        db: config.redis_db_session
     })
 }, app));
 app.use(bodyParser());

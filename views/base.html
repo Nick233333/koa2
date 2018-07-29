@@ -27,7 +27,7 @@
     <script src="{{ resources['/js/app.js'] }}"></script>
     <script>
     var userName = '{{ctx.flash.userName}}';
-    var socket = io.connect();
+    var socket = io.connect('{{ domain }}');
     if (userName) {
         socket.emit('news', { userName: userName });
     } 

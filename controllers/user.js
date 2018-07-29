@@ -4,9 +4,9 @@ const UsersModel = require('../models/users')
 const helpers = require('../functions/helpers')
 const config = require('../config/config')
 const redis = require("redis");
-const redis_client = redis.createClient({db: process.env.REDIS_DB_CACHE, auth_pass: config.redis_password});
+const redisClient = redis.createClient({db: process.env.REDIS_DB_CACHE, auth_pass: config.redis_password});
 const { promisify } = require('util');
-const getAsync = promisify(redis_client.get).bind(redis_client);
+const getAsync = promisify(redisClient.get).bind(redisClient);
 
 module.exports = {
 	async signup(ctx, next) {
@@ -47,7 +47,7 @@ module.exports = {
 		try {
             const result = await UsersModel.create(user);
             let code = Math.floor(new Date()) + Math.random();
-            redis_client.set(code, email);
+            redisClient.set(code, email);
             helpers.sendEmail(email, code, 'signin');
             ctx.flash = { success: '注册成功，请前往邮箱激活账号' };
             ctx.redirect('/');
@@ -59,12 +59,12 @@ module.exports = {
     },
     async activate(ctx, next) {
         let code = ctx.params.code;
-        await redis_client.get(code, async (err, res) => {
+        await redisClient.get(code, async (err, res) => {
             if (res !== null) {
                 await UsersModel.findOneAndUpdate({ email: res }, {
                     isActive: true,
                 });
-                redis_client.del(code) 
+                redisClient.del(code) 
             } 
         });
         ctx.flash = { success: '激活成功' }; 
@@ -137,7 +137,7 @@ module.exports = {
 			return ctx.redirect('back');
         }
         let code = Math.floor(new Date()) + Math.random();
-        await redis_client.set(code, email, 'EX', 60 * 60 *24);
+        await redisClient.set(code, email, 'EX', 60 * 60 *24);
         await helpers.sendEmail(email, code);
         ctx.flash = { success: '邮件已发送' };
         return ctx.redirect('back');
@@ -168,12 +168,12 @@ module.exports = {
 			ctx.flash = { warning: '密码不一致' };
 			return ctx.redirect('back');
         }
-        await redis_client.del(ctx.params.code)
+        await redisClient.del(ctx.params.code)
         const salt = await bcrypt.genSalt(10);
     	// 对密码进行加密
-        let new_password = await bcrypt.hash(password, salt);
+        let newPassword = await bcrypt.hash(password, salt);
         await UsersModel.findOneAndUpdate({ email: email }, {
-            password: new_password
+            password: newPassword
         })
         ctx.flash = { success: '密码重置成功' };
 		return ctx.redirect('/');
