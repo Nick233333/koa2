@@ -33,7 +33,7 @@ app.use(async (ctx, next) => {
 	ctx.state.ctx = ctx
     ctx.state.marked = marked
     ctx.state.resources = resources
-    ctx.state.dimain = config.domain
+    ctx.state.domain = config.domain
 	await next()
 })
 app.use(views(path.join(__dirname, 'views'), {
