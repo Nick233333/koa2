@@ -26,6 +26,27 @@ a:hover {
 a {
     text-decoration: none !important;
 }
+.print {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-animation: echo 4s steps(60, end) infinite;
+    animation: echo 4s steps(50, end) infinite;
+    animation-iteration-count: 1;
+    -webkit-animation-iteration-count: 1;
+}
+
+@keyframes echo {
+    from {
+        width: 0;
+    }
+}
+@-webkit-keyframes echo {
+    from {
+        width: 0;
+    }
+}
+
 .content ul {
     list-style: none;
     margin: 0;
