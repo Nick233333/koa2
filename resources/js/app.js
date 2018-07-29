@@ -46,3 +46,15 @@ $('#content').keydown(function() {
         showDialog();
     }
 })
+
+$(document).scroll(function () {
+    var height = $(this).scrollTop();
+    if (height > 100) {
+        $('#scroll-up').css({'display': 'block'});
+    } else {
+        $('#scroll-up').css({'display': 'none'});
+    }
+});
+$('#scroll-up').click(function() {
+    $('html,body').animate({scrollTop: '0px'}, 300);
+});

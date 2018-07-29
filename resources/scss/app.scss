@@ -7,7 +7,19 @@
     transition: background-color 5000s ease-in-out 0s;    
     font-weight: 500;
 }
-
+#scroll-up {
+    display: none;
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    bottom: 100px;
+    right: 20px;
+    z-index: 100;
+    border: 1px solid #00d1b2;
+    border-radius: 20px;
+    background-image: url('/images/icon-up.png');
+    background-size: 40px; 
+}
 a:hover {
     text-decoration: none !important;
 }
