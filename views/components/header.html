@@ -21,6 +21,16 @@
                 <a class="navbar-item" href="/about">关于</a>
             </div>
             <div class="navbar-end">
+                <div class="navbar-item">
+                    <form method="GET" action="/search" class="field has-addons has-addons-centered">
+                        <div class="control is-expanded">
+                            <input required class="input is-success is-rounded" type="text" name="title" placeholder="请输入关键词">
+                        </div>
+                        <div class="control">
+                            <button class="button is-success is-rounded">搜索</button>
+                        </div>
+                    </form>
+                </div>
                 {% if ctx.session.user.isAdmin %}
                 <div class="navbar-item">
                     <a class="button is-small is-info" href="/category">分类管理</a>

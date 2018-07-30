@@ -7,17 +7,20 @@ moment.locale('zh-cn');
 
 module.exports = {
     async index(ctx, next) {
-        
-        const currentPage = parseInt(ctx.query.page) || 1
-        const c_name = ctx.query.name
-        let c_id
+        const c_name = ctx.query.name;
+        const currentPage = parseInt(ctx.query.page) || 1;
+        let c_id;
+        let topPosts = await PostsModel.find({}, 'title').sort({'pv': -1}).limit(5);                       
+        let newPosts = await PostsModel.find({}, 'title').sort({'_id': -1}).limit(5);
         if (c_name) {
             const cateogry = await CategoryModel.findOne({ name: c_name })
             if (cateogry) {
                 c_id = cateogry._id
             } else {
                 return ctx.render('posts_list', {
-                    title: '文章',
+                    title: c_name,
+                    topPosts,
+                    newPosts
                 })    
             }
         }
@@ -32,13 +35,11 @@ module.exports = {
                                 { path: 'category', select: ['name'] }
                             ]);
         const baseUrl = c_name ? `${ctx.path}?c=${c_name}&page=` : `${ctx.path}?page=`
-        let topPosts = await PostsModel.find({}, 'title').sort({'pv': -1}).limit(5);                       
-        let newPosts = await PostsModel.find({}, 'title').sort({'_id': -1}).limit(5);
         for (const post of posts) {
             post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
         }
         await ctx.render('posts_list', {
-            title: '文章',
+            title: c_name,
             posts,
             pageSize,
             currentPage,

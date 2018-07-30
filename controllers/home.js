@@ -25,5 +25,34 @@ module.exports = {
             newPosts,
             topPosts
 		})
-	}
+    },
+    async search(ctx, next) {
+        let query = ctx.query.title ? {title: ctx.query.title} : {title: ''};
+        const currentPage = parseInt(ctx.query.page) || 1;
+        const pageSize = 15;
+        const allPostsCount = await PostsModel.find(query).countDocuments()
+        const pageCount = Math.ceil(allPostsCount / pageSize)
+        const pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1
+        const pageEnd = pageStart + 4 >= pageCount ? pageCount : pageStart + 4
+        const posts = await PostsModel.find(query).sort({'_id': -1}).skip((currentPage - 1) * pageSize).limit(pageSize)
+                            .populate([
+                                { path: 'category', select: ['name'] }
+                            ]);
+        const baseUrl = ctx.query.title ? `${ctx.path}?title=${ctx.query.title}&page=` : `${ctx.path}?page=`
+       
+        for (const post of posts) {
+            post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
+        }
+        await ctx.render('search', {
+            title: `搜索${query}`,
+            posts,
+            pageSize,
+            currentPage,
+            allPostsCount,
+            pageCount,
+            pageStart,
+            pageEnd,
+            baseUrl
+		})
+    }
 }

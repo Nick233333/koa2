@@ -1,0 +1,32 @@
+{% extends 'views/base.html' %}{% block body %}
+{% include "views/components/header.html" %}
+<section class="hero is-primary is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">Koa2</h1>
+            <h2 class="subtitle print">koa2 NodeJS Web 开发框架</h2>
+        </div>
+    </div>
+</section>
+<div class="container margin-top">
+    <div class="columns margin-0">
+        <div class="column is-8 is-offset-2">
+            {% for post in posts %}
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <a href="/posts/{{post._id}}">{{post.title}}</a>
+                        <div class="tags is-pulled-right is-hidden-mobile">
+                            <span title="浏览数" class="tag has-text-primary">{{ post.pv }}</span>
+                            <span title="发布时间" class="tag has-text-danger">{{ post.meta.date }}</span>
+                            <span title="分类" class="tag has-text-info">{{ post.category.name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% include "views/components/pagination.html" %}
+        </div>
+    </div>
+</div>
+{% endblock %}
