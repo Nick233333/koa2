@@ -46,7 +46,44 @@ a {
         width: 0;
     }
 }
-
+#search-btn:hover svg {
+    top: -.0625rem;
+    left: -.0625rem;
+    -webkit-animation: scan 1s linear infinite;
+    -moz-animation: scan 1s linear infinite;
+    -o-animation: scan 1s linear infinite;
+    -ms-animation: scan 1s linear infinite;
+    animation: scan 1s linear infinite;
+}
+@keyframes scan {
+    0% {
+        -webkit-transform: translate(0,5%);
+    }
+    12.5% {
+        -webkit-transform: translate(2%,17%);
+    }
+    25% {
+        -webkit-transform: translate(10%,25%);
+    }
+    37.5% {
+        -webkit-transform: translate(17%,17%);
+    }
+    50% {
+        -webkit-transform: translate(25%,10%);
+    }
+    62.5% {
+        -webkit-transform: translate(17%,2%);
+    }
+    75% {
+        -webkit-transform: translate(10%,0);
+    }
+    87.5% {
+        -webkit-transform: translate(2%,2%);
+    }
+    100% {
+        -webkit-transform: translate(0,10%);
+    }
+}
 .content ul {
     list-style: none;
     margin: 0;
