@@ -12,6 +12,7 @@ const router = require('./routes');
 const error = require('./middlewares/error_handler')
 const config = require('./config/config');
 mongoose.connect(config.mongodb, { useNewUrlParser: true });
+let figlet = require('figlet');
 
 marked.setOptions({
 	renderer: new marked.Renderer(),
@@ -55,10 +56,19 @@ app.use(error())
 app.use(flash());
 
 router(app);
-
-let server = app.listen(process.env.PORT, () => {
-	console.log(`server is running at http://127.0.0.1:${process.env.PORT}`)
+let server;
+figlet('HELLO', (err, data) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
+    console.log(data);
+    server = app.listen(process.env.PORT, () => {
+        console.log(`server is running at http://127.0.0.1:${process.env.PORT}`)
+    });
 });
+
+
 let io = require('socket.io')(server);
 io.on('connection', function (socket) {
     socket.on('news', function (data) {
