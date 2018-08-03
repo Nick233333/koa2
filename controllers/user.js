@@ -9,6 +9,12 @@ const { promisify } = require('util');
 const getAsync = promisify(redisClient.get).bind(redisClient);
 
 module.exports = {
+    async index(ctx, next) {
+        let id = ctx.params.id;
+        await ctx.render('user_index', {
+            title: '个人中心'
+        })
+    },
 	async signup(ctx, next) {
 		if (ctx.method === 'GET') {
 			await ctx.render('signup', {

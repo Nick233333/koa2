@@ -13,6 +13,7 @@ module.exports = (app) => {
     router.get('/', Home.index)
     router.get('/search', Home.search)
     router.get('/about', About.index)
+    router.get('/user/:id', User.index)
     router.get('/signup', User.signup)
     router.post('/signup', User.signup)
     router.get('/signin', User.signin)
