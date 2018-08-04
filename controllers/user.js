@@ -7,12 +7,41 @@ const redis = require("redis");
 const redisClient = redis.createClient({db: process.env.REDIS_DB_CACHE, auth_pass: config.redis_password});
 const { promisify } = require('util');
 const getAsync = promisify(redisClient.get).bind(redisClient);
+const PostsModel = require('../models/posts');
+let moment = require('moment');
+moment.locale('zh-cn');
 
 module.exports = {
     async index(ctx, next) {
         let id = ctx.params.id;
+        let user = await UsersModel.findById(id, 'name email meta avatar github');
+        user.date = moment(user.meta.createAt).format('LL');
+        const pageSize = 15
+        const currentPage = parseInt(ctx.query.page) || 1;
+        let query = {'author': id};
+        const allPostsCount = await PostsModel.find(query).countDocuments()
+        const pageCount = Math.ceil(allPostsCount / pageSize)
+        const pageStart = currentPage - 2 > 0 ? currentPage - 2 : 1
+        const pageEnd = pageStart + 4 >= pageCount ? pageCount : pageStart + 4
+        const posts = await PostsModel.find(query).sort({'_id': -1}).skip((currentPage - 1) * pageSize).limit(pageSize)
+                            .populate([
+                                { path: 'category', select: ['name'] }
+                            ]);
+        const baseUrl = `${ctx.path}?page=`;
+        for (const post of posts) {
+            post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
+        }
         await ctx.render('user_index', {
-            title: '个人中心'
+            title: '个人中心',
+            user,
+            posts,
+            pageSize,
+            currentPage,
+            allPostsCount,
+            pageCount,
+            pageStart,
+            pageEnd,
+            baseUrl,
         })
     },
 	async signup(ctx, next) {

@@ -28,6 +28,16 @@ const UsersSchema = new Schema({
         type: Boolean,
 		default: false
     },
+    avatar: {
+        type: 'string',
+        required: true,
+        default: `https://www.gravatar.com/avatar/${Date.now()}?s=500`
+    },
+    github: {
+        type: 'string',
+        required: true,
+        default: ''
+    },
 	meta: {
 		createAt: {
 			type: Date,
