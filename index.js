@@ -57,17 +57,17 @@ app.use(flash());
 
 router(app);
 let server;
-figlet('HELLO', (err, data) => {
-    if (err) {
-        console.log(err);
-        return;
-    }
-    console.log(data);
-    server = app.listen(process.env.PORT, () => {
+server = app.listen(process.env.PORT, async () => {
+    await figlet('HELLO', (err, data) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log(data);
         console.log(`server is running at http://127.0.0.1:${process.env.PORT}`)
     });
+    
 });
-
 
 let io = require('socket.io')(server);
 io.on('connection', function (socket) {
