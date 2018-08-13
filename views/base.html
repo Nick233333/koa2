@@ -53,6 +53,20 @@
             $('#noticeBox').fadeOut()
         }, 3000)
     });
+    function onLineNum(num) {
+        $('#onLineNum').text(`在线人数 ${num}`)
+    }
+    
+    socket.on('open', function(data) {
+        onLineNum(data.num) 
+    });
+    socket.on('close', function(data) {
+        onLineNum(data.num)
+    });
+    socket.emit('get_num');
+    socket.on('set_num', function(data) {
+        onLineNum(data.num)
+    });
     </script>
 </body>
 </html>

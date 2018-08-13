@@ -68,9 +68,19 @@ server = app.listen(process.env.PORT, async () => {
     });
     
 });
-
+let onLineNum = 0;
 let io = require('socket.io')(server);
 io.on('connection', function (socket) {
+    onLineNum++
+    socket.broadcast.emit('open', {num: onLineNum})
+    socket.on('disconnect', function() {
+        onLineNum--
+        socket.broadcast.emit('close', {num: onLineNum})
+    });
+    socket.on('get_num', function (data) {
+        socket.emit('set_num', {num: onLineNum})
+    });
+
     socket.on('news', function (data) {
         socket.broadcast.emit('news_posts', { msg: `${ data.userName } 发布了新文章！`, userName: data.userName});
     });
