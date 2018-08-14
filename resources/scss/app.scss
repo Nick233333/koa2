@@ -84,6 +84,23 @@ a {
         -webkit-transform: translate(0,10%);
     }
 }
+.navbar-tag {
+    position: relative;
+}
+.navbar-tag::after {
+    content: "";
+    width: 0;
+    height: 3px;
+    background: #3273dc;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transition: all .3s;
+}
+.navbar-tag:hover::after{ 
+    left: 0;
+    width: 100%;
+}
 .content ul {
     list-style: none;
     margin: 0;
