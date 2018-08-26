@@ -15,7 +15,7 @@ module.exports = {
         let topPosts = await PostsModel.find({}, 'title').sort({'pv': -1}).limit(5);                       
         let newPosts = await PostsModel.find({}, 'title').sort({'_id': -1}).limit(5);
         for (const post of posts) {
-            post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
+            post.meta.date = moment(post.meta.createdAt).fromNow()
         }
 		await ctx.render('index', {
             title: 'koa2 + mongodb - 博客系统',

@@ -36,7 +36,7 @@ module.exports = {
                             ]);
         const baseUrl = c_name ? `${ctx.path}?c=${c_name}&page=` : `${ctx.path}?page=`
         for (const post of posts) {
-            post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
+            post.meta.date = moment(post.meta.createdAt).fromNow()
         }
         await ctx.render('posts_list', {
             title: c_name,
