@@ -112,3 +112,55 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
         oscillator.stop(audioCtx.currentTime + 1);
     });
 })();
+
+let fullScreen = {
+    // 是否全屏
+    isFullScreen(){
+        if (!document.fullscreenElement
+            && !document.mozFullScreenElement
+            && !document.webkitFullscreenElement 
+            && !document.msFullscreenElement ) {
+                return true;
+        } else {
+            return false;
+        }
+    },
+
+    //进入全屏
+    requestFullScreen() {    
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+            document.documentElement.msRequestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+    },
+
+    //退出全屏
+    exitFullscreen() {    
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+    }
+}
+
+
+$('body').dblclick(function() {
+    if (fullScreen.isFullScreen()) {
+        fullScreen.requestFullScreen()
+    
+    } else {
+        fullScreen.exitFullscreen()
+    }
+})
+
+
