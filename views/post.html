@@ -1,6 +1,5 @@
 {% extends 'views/base.html' %}{% block css %}
-<link rel="dns-prefetch" href="//cdnjs.cloudflare.com/" />
-<link href="//cdn.bootcss.com/github-markdown-css/2.10.0/github-markdown.min.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
 {% endblock %}
 {% block body %}
@@ -34,7 +33,7 @@
 </div>
 {% endblock %}
 {% block script %}
-<script src="//cdn.bootcss.com/limonte-sweetalert2/7.21.1/sweetalert2.all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.28.2/sweetalert2.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
 <script>
     var is_login = '{{ ctx.session.user.name }}';

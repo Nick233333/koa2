@@ -23,8 +23,8 @@
     <link rel="shortcut icon" href="/favicon.png">
     <meta name="keywords" content="js, node, koa" />
     <meta name="description" content="js, node, koa">
-    <link rel="dns-prefetch" href="//cdn.bootcss.com" />
-    <link href="//cdn.bootcss.com/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
+    <link rel="dns-prefetch" href="cdnjs.cloudflare.com" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" rel="stylesheet">
     {% block css %}{% endblock %}
     <link rel="stylesheet" href="{{ resources['/css/app.css'] }}">
 </head>
@@ -47,8 +47,8 @@
         </svg>
     </a>
     {% include "views/components/footer.html" %}
-    <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/socket.io/2.1.1/socket.io.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     {% block script %}
     {% endblock %}
     <script src="{{ resources['/js/app.js'] }}"></script>
