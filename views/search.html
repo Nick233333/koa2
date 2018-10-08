@@ -25,7 +25,9 @@
                 </div>
             </div>
             {% endfor %}
-            {% include "views/components/pagination.html" %}
+            {% if posts.length === 0 %}
+            <p class="has-text-centered margin-top is-size-6 has-text-grey">👀暂无数据... 🙄</p>
+            {% endif %}
         </div>
     </div>
 </div>
