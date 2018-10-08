@@ -44,7 +44,7 @@ module.exports = {
             post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
         }
         await ctx.render('search', {
-            title: `搜索${query}`,
+            title: `搜索${ctx.query.title}`,
             posts,
             pageSize,
             currentPage,
