@@ -24,10 +24,7 @@ a {
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
-    -webkit-animation: echo 4s steps(60, end) infinite;
-    animation: echo 4s steps(50, end) infinite;
-    animation-iteration-count: 1;
-    -webkit-animation-iteration-count: 1;
+    animation: echo 5s steps(50, end);
 }
 
 @keyframes echo {
@@ -35,11 +32,7 @@ a {
         width: 0;
     }
 }
-@-webkit-keyframes echo {
-    from {
-        width: 0;
-    }
-}
+
 #search-btn:hover svg {
     top: -.0625rem;
     left: -.0625rem;
