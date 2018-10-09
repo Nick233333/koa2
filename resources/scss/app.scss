@@ -135,7 +135,12 @@ a {
 .h-70vh{ 
     height: 70vh;
 }
-
+#particles-js {
+    z-index: -1;
+    position: fixed;
+    left: 0;
+    right: 0;
+}
 #editor{
     height: calc(100vh - 104px);
 }

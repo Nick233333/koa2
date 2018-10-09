@@ -4,6 +4,7 @@
 {% endblock %}
 {% block body %}
 {% include "views/components/header.html" %}
+<div id="particles-js"></div>
 <div class="container padding-10 h-70vh">
     <div class="box sign-box">
         <form action="/signin" method="POST">
@@ -39,6 +40,8 @@
 {% endblock %}
 {% block script %}
 <script src="//use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+<script src="{{ resources['/js/login.js'] }}"></script>
 {% endblock %}
 
 
