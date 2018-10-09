@@ -1,18 +1,28 @@
-{% extends 'views/base.html' %} {% block body %}
+{% extends 'views/base.html' %} 
+{% block css%}
+<link rel="dns-prefetch" href="//use.fontawesome.com" />
+{% endblock %}
+{% block body %}
 {% include "views/components/header.html" %}
 <div class="container padding-10 h-70vh">
     <div class="box sign-box">
         <form action="/signin" method="POST">
             <div class="field">
                 <label class="label">用户名</label>
-                <div class="control">
+                <div class="control has-icons-left">
                     <input required class="input" name="name" type="text" autocomplete="off" placeholder="请输入用户名">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
                 </div>
             </div>
             <div class="field">
                 <label class="label">密码</label>
-                <div class="control">
+                <div class="control has-icons-left">
                     <input required autocomplete="off" class="input" name="password" type="password" placeholder="请输入密码">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
                 </div>
             </div>
             <div class="field is-grouped">
@@ -26,6 +36,9 @@
         </form>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script src="//use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 {% endblock %}
 
 
