@@ -134,6 +134,30 @@ a {
     left: 0;
     right: 0;
 }
+
+.heart:hover {
+    cursor: pointer;
+    animation: jump 2s infinite;
+}
+
+@keyframes jump {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(.5);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    75% {
+        transform: scale(.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 #editor{
     height: calc(100vh - 104px);
 }
