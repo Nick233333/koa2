@@ -34,7 +34,7 @@ module.exports = {
                             .populate([
                                 { path: 'category', select: ['name'] }
                             ]);
-        const baseUrl = c_name ? `${ctx.path}?c=${c_name}&page=` : `${ctx.path}?page=`
+        const baseUrl = c_name ? `${ctx.path}?name=${c_name}&page=` : `${ctx.path}?page=`
         for (const post of posts) {
             post.meta.date = moment(post.meta.createdAt).fromNow()
         }
