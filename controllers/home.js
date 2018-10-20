@@ -3,6 +3,11 @@ let moment = require('moment');
 moment.locale('zh-cn');
 module.exports = {
 	async index(ctx, next) {
+        let imgUrl;
+        let QRCode = require('qrcode');
+        QRCode.toDataURL(`${ctx.host}${ctx.url}`, {width: 230} , (err, url) => {
+            imgUrl = url
+        })
         const query = {}
         const pageSize = 15
         const currentPage = parseInt(ctx.query.page) || 1
@@ -17,13 +22,15 @@ module.exports = {
         for (const post of posts) {
             post.meta.date = moment(post.meta.createdAt).fromNow()
         }
+        
 		await ctx.render('index', {
             title: 'koa2 + mongodb - 博客系统',
             posts,
             currentPage,
             pageCount,
             newPosts,
-            topPosts
+            topPosts,
+            imgUrl
 		})
     },
     async search(ctx, next) {

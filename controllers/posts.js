@@ -7,6 +7,11 @@ moment.locale('zh-cn');
 
 module.exports = {
     async index(ctx, next) {
+        let imgUrl;
+        let QRCode = require('qrcode');
+        QRCode.toDataURL(`${ctx.host}${ctx.url}`, {width: 230} , (err, url) => {
+            imgUrl = url
+        })
         const c_name = ctx.query.name;
         const currentPage = parseInt(ctx.query.page) || 1;
         let c_id;
@@ -20,7 +25,8 @@ module.exports = {
                 return ctx.render('posts_list', {
                     title: c_name,
                     topPosts,
-                    newPosts
+                    newPosts,
+                    imgUrl
                 })    
             }
         }
@@ -49,7 +55,8 @@ module.exports = {
             pageEnd,
             baseUrl,
             topPosts,
-            newPosts
+            newPosts,
+            imgUrl
 		})
 	},
     async create(ctx, next) {
