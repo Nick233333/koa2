@@ -11,7 +11,7 @@ const flash = require('./middlewares/flash')
 const router = require('./routes');
 const error = require('./middlewares/error_handler')
 const config = require('./config/config');
-mongoose.connect(config.mongodb, { useNewUrlParser: true });
+mongoose.connect(config.mongodb, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
 let figlet = require('figlet');
 
 marked.setOptions({
