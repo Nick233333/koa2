@@ -86,20 +86,26 @@ module.exports = {
     },
     async show(ctx, next) {
         try {
-            const post = await PostsModel.findById(ctx.params.id)
+            let posts_id = ctx.params.id
+            const post = await PostsModel.findById(posts_id)
             .populate([
                 { path: 'author', select: 'name' },
                 { path: 'category', select: ['title', 'name'] }
             ]);
-            await PostsModel.findByIdAndUpdate(ctx.params.id, {
+            await PostsModel.findByIdAndUpdate(posts_id, {
                 pv: post.pv + 1
             })
-            const comments = await CommentsModel.find({ postId: ctx.params.id })
+            let next_posts = await PostsModel.find({ '_id': { '$gt': posts_id } }, '_id').sort({_id: 1}).limit(1)
+            let prev_posts = await PostsModel.find({ '_id': { '$lt': posts_id } }, '_id').sort({_id: -1}).limit(1)
+            
+            const comments = await CommentsModel.find({ postId: posts_id })
             .populate({ path: 'from', select: 'name' })
             await ctx.render('post', {
                 title: post.title,
                 post,
-                comments
+                comments,
+                prev_posts,
+                next_posts
             })
             
         } catch (error) {

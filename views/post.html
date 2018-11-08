@@ -24,7 +24,16 @@
                 </div>
                 
                 <div class="social-share has-text-centered"></div>
+                <nav class="pagination is-small margin-top" role="navigation" aria-label="pagination">
+                    {%  if prev_posts[0] %}
+                    <a href="/posts/{{prev_posts[0]._id}}" class="pagination-previous button is-small is-primary is-outlined">上一篇</a> 
+                    {% endif %}
+                    {%  if next_posts[0]  %}
+                    <a href="/posts/{{next_posts[0]._id}}" class="pagination-next button is-small is-info is-outlined">下一篇</a>
+                    {% endif %}
+                </nav>
             </div>
+            
             <section class="margin-top box">
                 {% include "views/components/comments.html" %}
             </section>
