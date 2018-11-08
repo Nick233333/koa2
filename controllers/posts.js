@@ -95,8 +95,8 @@ module.exports = {
             await PostsModel.findByIdAndUpdate(posts_id, {
                 pv: post.pv + 1
             })
-            let next_posts = await PostsModel.find({ '_id': { '$gt': posts_id } }, '_id').sort({_id: 1}).limit(1)
-            let prev_posts = await PostsModel.find({ '_id': { '$lt': posts_id } }, '_id').sort({_id: -1}).limit(1)
+            let next_posts = await PostsModel.findOne({ '_id': { '$gt': posts_id } }, '_id').sort({_id: 1})
+            let prev_posts = await PostsModel.findOne({ '_id': { '$lt': posts_id } }, '_id').sort({_id: -1})
             
             const comments = await CommentsModel.find({ postId: posts_id })
             .populate({ path: 'from', select: 'name' })
