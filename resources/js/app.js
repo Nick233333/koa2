@@ -56,7 +56,7 @@ $(document).scroll(function () {
     }
 });
 $('#scroll-up').click(function() {
-    navigator.vibrate(2000);
+    navigator.vibrate(200);
     $('html,body').animate({scrollTop: '0px'}, 300);
 });
 
