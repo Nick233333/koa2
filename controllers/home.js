@@ -12,17 +12,17 @@ module.exports = {
         const pageSize = 15
         const currentPage = parseInt(ctx.query.page) || 1
         const allPostsCount = await PostsModel.find(query).countDocuments()
-        const pageCount = Math.ceil(allPostsCount / pageSize) 
+        const pageCount = Math.ceil(allPostsCount / pageSize)
         const posts = await PostsModel.find(query).sort({'_id': -1}).skip((currentPage - 1) * pageSize).limit(pageSize)
                             .populate([
                                 { path: 'category', select: ['name'] }
                             ]);
-        let topPosts = await PostsModel.find({}, 'title').sort({'pv': -1}).limit(5);                       
+        let topPosts = await PostsModel.find({}, 'title').sort({'pv': -1}).limit(5);
         let newPosts = await PostsModel.find({}, 'title').sort({'_id': -1}).limit(5);
         for (const post of posts) {
             post.meta.date = moment(post.meta.createdAt).fromNow()
         }
-        
+
 		await ctx.render('index', {
             title: 'koa2 + mongodb - 博客系统',
             posts,
@@ -46,7 +46,7 @@ module.exports = {
                                 { path: 'category', select: ['name'] }
                             ]);
         const baseUrl = ctx.query.title ? `${ctx.path}?title=${ctx.query.title}&page=` : `${ctx.path}?page=`
-       
+
         for (const post of posts) {
             post.meta.date = moment(post.meta.createdAt).startOf('hour').fromNow()
         }
