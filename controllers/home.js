@@ -5,7 +5,7 @@ module.exports = {
 	async index(ctx, next) {
         let imgUrl;
         let QRCode = require('qrcode');
-        QRCode.toDataURL(`https://${ctx.host}${ctx.url}`, {width: 230} , (err, url) => {
+        QRCode.toDataURL(`https://${ctx.host}${ctx.url}`, {width: 150} , (err, url) => {
             imgUrl = url
         })
         const query = {}
