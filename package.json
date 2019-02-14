@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chalk": "^2.4.2",
     "dotenv": "^6.2.0",
     "figlet": "^1.2.0",
     "koa": "^2.6.2",
@@ -23,7 +24,7 @@
     "koa-session": "^5.10.1",
     "koa-static": "^5.0.0",
     "koa-views": "^6.1.5",
-    "laravel-mix": "^2.1.11",
+    "laravel-mix": "^4.0.14",
     "marked": "^0.4.0",
     "moment": "^2.23.0",
     "mongoose": "^5.4.2",

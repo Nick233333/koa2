@@ -13,6 +13,7 @@ const error = require('./middlewares/error_handler')
 const config = require('./config/config');
 mongoose.connect(config.mongodb, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
 let figlet = require('figlet');
+const chalk = require('chalk');
 
 marked.setOptions({
 	renderer: new marked.Renderer(),
@@ -24,7 +25,7 @@ marked.setOptions({
 	smartLists: true,
 	smartypants: false
 })
-               
+
 const app = new Koa();
 
 app.keys = [config.app_key];
@@ -60,13 +61,12 @@ let server;
 server = app.listen(process.env.PORT, async () => {
     await figlet('HELLO', (err, data) => {
         if (err) {
-            console.log(err);
             return;
         }
-        console.log(data);
-        console.log(`server is running at http://127.0.0.1:${process.env.PORT}`)
+        console.log(chalk.blue(data))
+        console.log(chalk.underline.yellow(`server is running at http://127.0.0.1:${process.env.PORT}`))
     });
-    
+
 });
 let onLineNum = 0;
 let io = require('socket.io')(server);
