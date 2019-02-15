@@ -14,8 +14,6 @@ const config = require('./config/config');
 mongoose.connect(config.mongodb, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
 let figlet = require('figlet');
 const chalk = require('chalk');
-const inquirer = require('inquirer');
-
 
 marked.setOptions({
 	renderer: new marked.Renderer(),
@@ -60,22 +58,13 @@ app.use(flash());
 
 router(app);
 let server;
-
-inquirer.prompt({
-    type: 'input',
-    name: 'port',
-    message: chalk.red('Please input port:'),
-    default: process.env.PORT
-}).then(answers => {
-    process.env.PORT = answers.port;
-    server = app.listen(process.env.PORT, async () => {
-        await figlet('HELLO', (err, data) => {
-            if (err) {
-                return;
-            }
-            console.log(chalk.blue(data))
-            console.log(chalk.underline.yellow(`server is running at http://127.0.0.1:${process.env.PORT}`))
-        });
+server = app.listen(process.env.PORT, async () => {
+    await figlet('HELLO', (err, data) => {
+        if (err) {
+            return;
+        }
+        console.log(chalk.blue(data))
+        console.log(chalk.underline.yellow(`server is running at http://127.0.0.1:${process.env.PORT}`))
     });
 });
 
