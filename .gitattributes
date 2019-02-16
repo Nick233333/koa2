@@ -4,4 +4,8 @@
 *.js linguist-vendored
 *.html linguist-vendored
 
+*.css linguist-language=javascript
+*.scss linguist-language=javascript
+*.js linguist-language=javascript
 *.html linguist-language=javascript
+
