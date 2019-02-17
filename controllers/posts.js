@@ -15,7 +15,7 @@ module.exports = {
         const c_name = ctx.query.name;
         const currentPage = parseInt(ctx.query.page) || 1;
         let c_id;
-        let topPosts = await PostsModel.find({}, 'title').sort({'pv': -1}).limit(5);                       
+        let topPosts = await PostsModel.find({}, 'title').sort({'pv': -1}).limit(5);
         let newPosts = await PostsModel.find({}, 'title').sort({'_id': -1}).limit(5);
         if (c_name) {
             const cateogry = await CategoryModel.findOne({ name: c_name })
@@ -27,7 +27,7 @@ module.exports = {
                     topPosts,
                     newPosts,
                     imgUrl
-                })    
+                })
             }
         }
         const pageSize = 15
@@ -79,7 +79,7 @@ module.exports = {
         const post = Object.assign(ctx.request.body, {
             author: ctx.session.user._id
         })
-        
+
         const res = await PostsModel.create(post);
         ctx.flash = { success: '发表文章成功', userName: ctx.session.user.name };
         ctx.redirect(`/posts/${res._id}`);
@@ -97,7 +97,7 @@ module.exports = {
             })
             let next_posts = await PostsModel.findOne({ '_id': { '$gt': posts_id } }, '_id').sort({_id: 1})
             let prev_posts = await PostsModel.findOne({ '_id': { '$lt': posts_id } }, '_id').sort({_id: -1})
-            
+
             const comments = await CommentsModel.find({ postId: posts_id })
             .populate({ path: 'from', select: 'name' })
             await ctx.render('post', {
@@ -107,7 +107,7 @@ module.exports = {
                 prev_posts,
                 next_posts
             })
-            
+
         } catch (error) {
             ctx.flash = { warning: '文章不存在' };
 			return ctx.redirect('back');
@@ -120,12 +120,12 @@ module.exports = {
                 { path: 'category', select: ['title', 'name'] }
             ]);
             if (!post) {
-                throw new Error('文章不存在')
+                // throw new Error('文章不存在')
                 ctx.flash = { warning: '文章不存在' };
 			    return ctx.redirect('back');
             }
             if (post.author.toString() !== ctx.session.user._id) {
-                throw new Error('没有权限')
+                // throw new Error('没有权限')
                 ctx.flash = { warning: '没有权限' };
 			    return ctx.redirect('back');
             }
@@ -156,7 +156,7 @@ module.exports = {
         if (!post) {
             throw new Error('文章不存在')
         }
-        
+
         if (post.author.toString() !== ctx.session.user._id) {
             throw new Error('没有权限')
         }
