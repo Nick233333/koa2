@@ -1,5 +1,5 @@
-<!-- 
- .----------------.  .----------------.  .----------------.  .----------------. 
+<!--
+ .----------------.  .----------------.  .----------------.  .----------------.
 | .--------------. || .--------------. || .--------------. || .--------------. |
 | |  ___  ____   | || |     ____     | || |      __      | || |    _____     | |
 | | |_  ||_  _|  | || |   .'    `.   | || |     /  \     | || |   / ___ `.   | |
@@ -9,7 +9,7 @@
 | | |____||____| | || |   `.____.'   | || ||____|  |____|| || |  |_______|   | |
 | |              | || |              | || |              | || |              | |
 | '--------------' || '--------------' || '--------------' || '--------------' |
- '----------------'  '----------------'  '----------------'  '----------------' 
+ '----------------'  '----------------'  '----------------'  '----------------'
    Powered by -- http://www.noxidsoft.com/otherApps/taag
 -->
 <!DOCTYPE html>
@@ -46,8 +46,9 @@
             <rect fill="#FF871C" x="245" y="231" width="20" height="9"></rect>
         </svg>
     </a>
-    
+
     {% include "views/components/footer.html" %}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/instant.page/1.2.1/instantpage.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     {% block script %}
@@ -58,7 +59,7 @@
     var socket = io.connect('{{ domain }}');
     if (userName) {
         socket.emit('news', { userName: userName });
-    } 
+    }
     socket.on('news_posts', function(data) {
         $('#noticeBox').show()
         $('#noticeMsg').text(data.msg)
@@ -69,9 +70,9 @@
     function onLineNum(num) {
         $('#onLineNum').text(`在线人数 ${num}`)
     }
-    
+
     socket.on('open', function(data) {
-        onLineNum(data.num) 
+        onLineNum(data.num)
     });
     socket.on('close', function(data) {
         onLineNum(data.num)
