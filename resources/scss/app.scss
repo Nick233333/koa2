@@ -306,3 +306,53 @@ a {
         transform: translate(-50%, 0%) rotateZ(360deg);
     }
 }
+
+.button-jelly {
+    line-height: 1;
+}
+.button-jelly:hover {
+    animation: jelly .5s;
+}
+
+@keyframes jelly {
+    0%,
+    100% {
+        transform: scale(1, 1);
+    }
+
+    25%,
+    75% {
+        transform: scale(0.9, 1.1);
+    }
+
+    50% {
+        transform: scale(1.1, 0.9);
+    }
+}
+
+.bubble {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    border: none;
+}
+
+.bubble::before {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background-color: #209cee;
+    transform-origin: center;
+    transform: translate3d(-50%, -50%, 0) scale(0, 0);
+    transition: transform .4s ease-in-out;
+}
+
+.bubble:hover::before {
+    transform: translate3d(-50%, -50%, 0) scale(15, 15);
+}
+

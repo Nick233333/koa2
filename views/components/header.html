@@ -38,28 +38,28 @@
                 </div>
                 {% if ctx.session.user.isAdmin %}
                 <div class="navbar-item">
-                    <a class="button is-small is-info" href="/category">分类管理</a>
+                    <a class="button is-small is-info button-jelly" href="/category">分类管理</a>
                 </div>
                 {% endif %}
                 {% if ctx.session.user %}
                 <div class="navbar-item">
-                    <a class="button is-small is-primary" href="/posts/new">创作文章</a>
+                    <a class="button is-small is-primary button-jelly" href="/posts/new">创作文章</a>
                 </div>
                 <div class="navbar-item has-text-link has-dropdown is-hoverable">
                     <a href="javascript:;" class="navbar-link">{{ctx.session.user.name}}</a>
                     <div class="navbar-dropdown">
                         <a href="/signout" class="navbar-item has-text-danger">退出</a>
-                    </div>    
+                    </div>
                 </div>
                 {% else %}
                 <div class="navbar-item">
-                    <a class="button is-small is-success" href="/signup">注册</a>
+                    <a class="button is-small is-success button-jelly" href="/signup">注册</a>
                 </div>
                 <div class="navbar-item">
-                    <a class="button is-small is-info" href="/signin">登录</a>
+                    <a class="button is-small is-info button-jelly" href="/signin">登录</a>
                 </div>
                 {% endif %}
             </div>
-        </div>    
+        </div>
     </div>
 </nav>
