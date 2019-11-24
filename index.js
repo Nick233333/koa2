@@ -11,7 +11,7 @@ const flash = require('./middlewares/flash')
 const router = require('./routes');
 const error = require('./middlewares/error_handler')
 const config = require('./config/config');
-mongoose.connect(config.mongodb, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
+mongoose.connect(config.mongodb, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false, useUnifiedTopology: true });
 let figlet = require('figlet');
 const chalk = require('chalk');
 
